@@ -1,0 +1,734 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="在本系列的头三个讲解中，我们学习了什么是注解、如何定义注解、以及如何配置注解。那么当做好了这一切，这样的注解在实际中又有什么样的作用呢？这就是我们今天要讨论的：让编写期配置在Java文件的注解影响运行期的效果，即下图的第三步。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="注解Annotation全解析（四）：自定义注解的运行时解析">
+<meta property="og:url" content="http://yoursite.com/2017/06/14/注解Annotation全解析（四）/index.html">
+<meta property="og:site_name" content="劲松风烟古，月照夜归人">
+<meta property="og:description" content="在本系列的头三个讲解中，我们学习了什么是注解、如何定义注解、以及如何配置注解。那么当做好了这一切，这样的注解在实际中又有什么样的作用呢？这就是我们今天要讨论的：让编写期配置在Java文件的注解影响运行期的效果，即下图的第三步。">
+<meta property="og:image" content="http://yoursite.com/img/annotation4/1.PNG">
+<meta property="og:image" content="http://yoursite.com/img/annotation4/showmecode">
+<meta property="og:updated_time" content="2017-06-26T10:03:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="注解Annotation全解析（四）：自定义注解的运行时解析">
+<meta name="twitter:description" content="在本系列的头三个讲解中，我们学习了什么是注解、如何定义注解、以及如何配置注解。那么当做好了这一切，这样的注解在实际中又有什么样的作用呢？这就是我们今天要讨论的：让编写期配置在Java文件的注解影响运行期的效果，即下图的第三步。">
+<meta name="twitter:image" content="http://yoursite.com/img/annotation4/1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/14/注解Annotation全解析（四）/"/>
+
+
+
+
+
+  <title>注解Annotation全解析（四）：自定义注解的运行时解析 | 劲松风烟古，月照夜归人</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">劲松风烟古，月照夜归人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">写给自己，非请勿入</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/14/注解Annotation全解析（四）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="把酒临江">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.psd">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="劲松风烟古，月照夜归人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">注解Annotation全解析（四）：自定义注解的运行时解析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-14T00:00:00+08:00">
+                2017-06-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaSE/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaSE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在本系列的头三个讲解中，我们学习了什么是注解、如何定义注解、以及如何配置注解。那么当做好了这一切，这样的注解在实际中又有什么样的作用呢？这就是我们今天要讨论的：<strong>让编写期配置在Java文件的注解影响运行期的效果</strong>，即下图的第三步。<br><img src="/img/annotation4/1.PNG" alt=""><br><a id="more"></a></p>
+<h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>我们在前面定义了一个叫LovoAnnotation的注解，并且把它配置在了类Student上，具体代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Target;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</div><div class="line"></div><div class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Documented</span></div><div class="line"><span class="meta">@Inherited</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> LovoAnnotation&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">age</span><span class="params">()</span> <span class="keyword">default</span> 18</span>;</div><div class="line">    <span class="keyword">int</span>[] scores(); </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@LovoAnnotation</span>(name=<span class="string">"zhang3"</span>,age=<span class="number">24</span>,scores=&#123;<span class="number">85</span>,<span class="number">67</span>,<span class="number">72</span>&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">study</span><span class="params">(<span class="keyword">int</span> times)</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; times; i++)&#123;</div><div class="line">            System.out.println(<span class="string">"Good Good Study, Day Day Up!"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么接下来，我们就以此为例来演示在运行时解析配置在Student类上面的@LovoAnnotation的信息。</p>
+<h2 id="运行时解析"><a href="#运行时解析" class="headerlink" title="运行时解析"></a>运行时解析</h2><h3 id="确认注解的保持力"><a href="#确认注解的保持力" class="headerlink" title="确认注解的保持力"></a>确认注解的保持力</h3><p>在定义注解的时候有一个元注解叫@Retention。这个注解是专门用来描述自定义注解的保持力。说白了就是这个注解能在存在于<strong>源代码、class文件、运行期</strong>三个阶段中的哪一个。<strong>只有当一个注解，使用了@Retention(RetentionPolicy.RUNTIME)修饰，才表示这个注解能够保持到运行期</strong>。也只有这种情况我们才可以在运行期获取到它。所以，首先一定要确认这一点。</p>
+<h3 id="反射操作获取注解"><a href="#反射操作获取注解" class="headerlink" title="反射操作获取注解"></a>反射操作获取注解</h3><p>在运行期探究和使用编译期的内容，当然要用到Java中的开挂技术—反射！<br><img src="/img/annotation4/showmecode" alt=""><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="comment">//获取Student的Class对象</span></div><div class="line">        Class stuClass = Class.forName(<span class="string">"com.lovo.bean.Student"</span>);</div><div class="line">        <span class="keyword">if</span>(stuClass.isAnnotationPresent(LovoAnnotation.class))&#123;</div><div class="line">        System.out.println(<span class="string">"Student类上配置了LovoAnnotation注解"</span>);</div><div class="line">        LovoAnnotation anno = (LovoAnnotation)</div><div class="line">            stuClass.getAnnotation(LovoAnnotation.class);</div><div class="line">        String name = anno.name();</div><div class="line">        <span class="keyword">int</span> age = anno.age();</div><div class="line">        System.out.println(name + <span class="string">"   "</span> + age);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            System.out.println(<span class="string">"Student类上没有配置LovoAnnotation注解"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</div><div class="line">        <span class="comment">// TODO Auto-generated catch block</span></div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><em>解释一下：</em></p>
+<ol>
+<li>如果我们要获得的注解是配置在类型上的，那么我们要从Class 对象上获取；如果是配置在属性、构造、普通方法等元素上，那么要从该属性对应的Field对象、该构造对应的Constructor对象、该方法对应的Method对象等反射对象上获取；</li>
+<li>isAnnotationPresent(注解.class)方法是专门判断是否配置有某个指定的注解对象；</li>
+<li>getAnnotation(注解.class)方法是获取指定的注解，然后在调用该注解的注解类型元素方法就可以获得配置时的值数据；</li>
+<li>反射对象上还有一个方法getAnnotations()，该方法可以获得该对象身上配置的所有的注解。它会返回给我们一个注解数组，需要注意的是该数组的类型是Annotation类型，这个Annotation是一个来自于java.lang.annotation包的接口（我们曾在本系列的第一章介绍过它，记不住就回头去看看）。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Annotation[] allAnnos = stuClass.getAnnotations();</div></pre></td></tr></table></figure> 
+<ol>
+<li>如果我们的注解使用了元注解@Inherited修饰的话，那么Student的子类无需配置也会自动具备来自于父类的注解。<strong>注意：这个特性仅限于@Target为ElementType.TYPE的注解。</strong></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LovoStudent</span> <span class="keyword">extends</span> <span class="title">Student</span></span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>大家自己测试一下这个结论吧。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此，我们就可以在运行期获得编写java文件时配置的各种注解了。虽然我们写了好几篇博客才搞定，但是其实语法并不复杂，只是我们讲解的比较细致而已。<br>在日常开发中，我们大家什么时候感受使用注解最多呢？当然是在各种JavaEE框架的配置中，我们很明显感受到以前很多框架的老版本都是使用的XML文件做配置，而今很多框架的新版本都改成了支持注解配置的方式。<br>那么，注解真的可以用来完全替代XML吗？请关注本系列的最后一节。<br><em><em>系列：</em></em><br><a href="">注解Annotation全解析（一）：我不是注释</a><br><a href="">注解Annotation全解析（二）：自定义注解的定义</a><br><a href="">注解Annotation全解析（三）：自定义注解的配置使用</a><br>注解Annotation全解析（四）：自定义注解的运行时解析<br><a href="">注解Annotation全解析（五）：注解与XML的比较</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/12/注解Annotation全解析（三）/" rel="next" title="注解Annotation全解析（三）：自定义注解的配置使用">
+                <i class="fa fa-chevron-left"></i> 注解Annotation全解析（三）：自定义注解的配置使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/16/注解Annotation全解析（五）/" rel="prev" title="注解Annotation全解析（五）：注解与XML的比较">
+                注解Annotation全解析（五）：注解与XML的比较 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.psd"
+               alt="把酒临江" />
+          <p class="site-author-name" itemprop="name">把酒临江</p>
+           
+              <p class="site-description motion-element" itemprop="description">在诗和远方中苟且</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#回顾"><span class="nav-number">1.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时解析"><span class="nav-number">2.</span> <span class="nav-text">运行时解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#确认注解的保持力"><span class="nav-number">2.1.</span> <span class="nav-text">确认注解的保持力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反射操作获取注解"><span class="nav-number">2.2.</span> <span class="nav-text">反射操作获取注解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">把酒临江</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

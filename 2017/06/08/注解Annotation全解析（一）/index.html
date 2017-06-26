@@ -1,0 +1,781 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="我们在IDE（集成开发环境，比如：Eclipse）工具中开发程序时，经常会使用自动代码生成的方式完成一些重写操作。这个时候，我们常常发现工具会在重写方法上面会自动出现一行奇怪的代码：@Override。1234@Overridepublic String toString()&amp;#123;    return &quot;返回对象的字符串描述&quot;;&amp;#125;我们试着保留它，或是删掉它，结果发现这个东西对我们重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="注解Annotation全解析（一）：我不是注释">
+<meta property="og:url" content="http://yoursite.com/2017/06/08/注解Annotation全解析（一）/index.html">
+<meta property="og:site_name" content="劲松风烟古，月照夜归人">
+<meta property="og:description" content="我们在IDE（集成开发环境，比如：Eclipse）工具中开发程序时，经常会使用自动代码生成的方式完成一些重写操作。这个时候，我们常常发现工具会在重写方法上面会自动出现一行奇怪的代码：@Override。1234@Overridepublic String toString()&amp;#123;    return &quot;返回对象的字符串描述&quot;;&amp;#125;我们试着保留它，或是删掉它，结果发现这个东西对我们重">
+<meta property="og:image" content="http://yoursite.com/img/annotation1/1.PNG">
+<meta property="og:image" content="http://yoursite.com/img/annotation1/2.PNG">
+<meta property="og:image" content="http://yoursite.com/img/annotation1/3.PNG">
+<meta property="og:image" content="http://yoursite.com/img/annotation1/4.PNG">
+<meta property="og:image" content="http://yoursite.com/img/annotation1/5.PNG">
+<meta property="og:updated_time" content="2017-06-26T09:42:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="注解Annotation全解析（一）：我不是注释">
+<meta name="twitter:description" content="我们在IDE（集成开发环境，比如：Eclipse）工具中开发程序时，经常会使用自动代码生成的方式完成一些重写操作。这个时候，我们常常发现工具会在重写方法上面会自动出现一行奇怪的代码：@Override。1234@Overridepublic String toString()&amp;#123;    return &quot;返回对象的字符串描述&quot;;&amp;#125;我们试着保留它，或是删掉它，结果发现这个东西对我们重">
+<meta name="twitter:image" content="http://yoursite.com/img/annotation1/1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/08/注解Annotation全解析（一）/"/>
+
+
+
+
+
+  <title>注解Annotation全解析（一）：我不是注释 | 劲松风烟古，月照夜归人</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">劲松风烟古，月照夜归人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">写给自己，非请勿入</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/08/注解Annotation全解析（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="把酒临江">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.psd">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="劲松风烟古，月照夜归人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">注解Annotation全解析（一）：我不是注释</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-08T00:00:00+08:00">
+                2017-06-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaSE/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaSE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我们在IDE（集成开发环境，比如：Eclipse）工具中开发程序时，经常会使用自动代码生成的方式完成一些重写操作。这个时候，我们常常发现工具会在重写方法上面会自动出现一行奇怪的代码：<strong>@Override</strong>。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"返回对象的字符串描述"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br>我们试着保留它，或是删掉它，结果发现这个东西对我们重写的语法似乎并没有什么影响。久而久之，大家也就习惯了它的存在，并忽略了它，甚至误认为它不是Java代码而是Eclipse自己提供的一个东东，不关Java的事情。<br>今天，我们来认识认识这个语法，它叫做：注解———Annotation。<br><a id="more"></a></p>
+<h2 id="Annotation的概念"><a href="#Annotation的概念" class="headerlink" title="Annotation的概念"></a>Annotation的概念</h2><p>我们先明确一点，Annotation（注解）是一个确定的Java语法。虽然它出现的时间较晚，在JDK1.5才被提出来，但确实是Java的亲儿子。我们来看看官方对它的描述：</p>
+<blockquote>
+<p>An annotation is a form of metadata, that can be added to Java source code. Classes, methods, variables, parameters and packages may be annotated. Annotations have no direct effect on the operation of the code they annotate.</p>
+</blockquote>
+<p>翻译如下：</p>
+<blockquote>
+<p>Annotation 是一种能够被书写到Java源代码中的元数据（metadata：描述数据的数据）形式。类、方法、变量、参数和包都可以使用它来进行描述。Annotation不会对它描述的代码操作有任何的直接影响。</p>
+</blockquote>
+<p>通过对上文的中文仔细分析，我们可以得到如下几个重要结论：<br>1、Annotation是一种元数据形式。也就是说它其实是<strong>属于Java中的一种数据类型</strong>，其地位和类、接口、数组、枚举这些都是一样的；<br>2、Annotation是书写在Java代码中的，但是其书写的位置被固定为类、方法、变量、参数和包的申明部分（原文中be annotated 直译为 附注）；<br>3、Annotation不会对所描述的代码有直接影响。这句话是最让初学者困惑的，因为这个时候另一个概念在脑袋里面浮现出来了，它就是注释。</p>
+<h2 id="Annotation不是注释"><a href="#Annotation不是注释" class="headerlink" title="Annotation不是注释"></a>Annotation不是注释</h2><p>注释是作为程序员的我们非常熟悉的一个概念。它是对代码的解释和说明，其目的是让<strong>阅读代码的人</strong>能够更加轻松地了解代码。编写程序时，<strong>写程序的人</strong>给一个语句、程序段、函数等作出解释或提示，能提高程序代码的可读性。<br>注释，只存在于Java源代码当中，由于对于编译和运行没有任何作用，它甚至不会被编译到class文件里面。因为它就是给人看的，编译器和JVM都不需要知道它。但Annotation也是如此吗？<br>我们还是以<strong>@Override</strong>为例：<br>第一种情况：假如我们没有书写这个Annotation，然后进行错误的重写：<br><img src="/img/annotation1/1.PNG" alt=""><br>第二种情况：假如我们书写了Annotation，然后进行错误的重写：<br><img src="/img/annotation1/2.PNG" alt=""><br>这时我们马上发现：第一种方式编译器根本就不给我们报错，它会默认为我们添加了一个全新的方法，而不是在进行重写；第二种方式则会立马编译失败，并且明确告诉我们这不是一个正确的重写。<strong>这说明什么？</strong> 这说明，@Override这个Annotation可不是仅仅给人读的，它还影响到了编译器，编译器也读到了它，并且做出了相应的操作！就凭这一点，就可以断言Annotation不是注释。怪不得给它翻译了一个独特的中文名：<strong>注解</strong>，以示区分。<br>我们再来看看官方对它的使用范围的描述：</p>
+<blockquote>
+<p>Annotations have a number of uses, among them:<br><strong>Information for the compiler</strong> — Annotations can<br>be used by the compiler to detect errors or<br>suppress warnings.<br><strong>Compile-time and deployment-time processing</strong> —<br>Software tools can process annotation information<br>to generate code, XML files, and so forth.<br><strong>Runtime processing</strong> — Some annotations are<br>available to be examined at runtime.  </p>
+</blockquote>
+<p>翻译如下：</p>
+<blockquote>
+<p>注解有非常多的用途，包括如下：<br><strong>为编译器提供信息</strong> —— 注解可用于让编译器检测错误或抑制警告。<br><strong>编译时和部署时处理</strong> —— 软件工具可以处理注解信息从而生成代码，XML文件等等。<br><strong>运行时处理</strong> —— 一些注解可以在运行时被检查到。</p>
+</blockquote>
+<p>厉害了，我的哥！我们可以清楚的看到，注解可不是仅仅给程序员看的，它还可以在编译期和运行期起作用，影响到编译器的编译动作或是最终的运行效果。这个时候，你还认为它和注释是一回事情吗？<br>那么，这么厉害的玩意儿，咋用呢？</p>
+<h2 id="JDK自带的常用Annotation"><a href="#JDK自带的常用Annotation" class="headerlink" title="JDK自带的常用Annotation"></a>JDK自带的常用Annotation</h2><p>我们先学一下JDK中最常用的三个Annotation。它们分别是：@Override、@Deprecated和@SuppressWarnings。</p>
+<h3 id="Override"><a href="#Override" class="headerlink" title="@Override"></a>@Override</h3><p>这个注解我们在上面已经大量使用过了，平时也见得很多。它是专门用来限定重写父类方法。对于子类中被@Override修饰的方法，如果存在对应的被重写的父类方法，则编译通过；如果不存在，则编译报错。@Override只能作用于方法，不能作用于其他程序元素。</p>
+<h3 id="Deprecated"><a href="#Deprecated" class="headerlink" title="@Deprecated"></a>@Deprecated</h3><p>用于表示某个程序元素（类、方法等）已过时。如果使用被@Deprecated修饰的类或方法等，编译器会发出警告。<br><img src="/img/annotation1/3.PNG" alt=""><br>需要注意的是：过时的类或方法并不代表错误，只是有了更好的新的替代而不再推荐使用了。</p>
+<h3 id="SuppressWarnings"><a href="#SuppressWarnings" class="headerlink" title="@SuppressWarnings"></a>@SuppressWarnings</h3><p>抑制编译器警告。指示被@SuppressWarnings修饰的程序元素（以及该程序元素中的所有子元素，例如类以及该类中的方法…..）取消显示的编译器警告。比如：<br>使用前<br><img src="/img/annotation1/4.PNG" alt=""><br>使用后<br><img src="/img/annotation1/5.PNG" alt=""><br>可以很明显的发现，Eclipse中黄色的警告标记不见了。其中“unused”是抑制了lst变量申明后没有被使用的警告；“rawtypes”是抑制了没有使用泛型的警告。常见的能够抑制的警告及其关键字在下表中：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">关键字</th>
+<th style="text-align:left">被抑制的警告类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">all</td>
+<td style="text-align:left">抑制所有警告</td>
+</tr>
+<tr>
+<td style="text-align:left">deprecation</td>
+<td style="text-align:left">抑制使用了过时的类或方法的警告</td>
+</tr>
+<tr>
+<td style="text-align:left">fallthrough</td>
+<td style="text-align:left">抑制switch块中没有break语句的警告</td>
+</tr>
+<tr>
+<td style="text-align:left">finally</td>
+<td style="text-align:left">抑制finally块不能正常完成的警告</td>
+</tr>
+<tr>
+<td style="text-align:left">rawtypes</td>
+<td style="text-align:left">抑制没有使用泛型的警告</td>
+</tr>
+<tr>
+<td style="text-align:left">serial</td>
+<td style="text-align:left">抑制可序列化类没有使用序列化ID的警告</td>
+</tr>
+<tr>
+<td style="text-align:left">unchecked</td>
+<td style="text-align:left">抑制未检查操作的警告</td>
+</tr>
+<tr>
+<td style="text-align:left">unused</td>
+<td style="text-align:left">抑制变量或方法申明定义后未使用的警告</td>
+</tr>
+</tbody>
+</table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>Annotation(注解)相当于一种标记，当我们在程序代码中加入注解就相当于为程序打上了某种标记。编译器、开发工具和其他程序可以通过了解类以及类中的各种元素上有无何种标记，从而执行相应的动作。注解标记可以加在包、类，属性、方法，方法的参数以及局部变量上。</strong></p>
+<p><em><em>系列：</em></em><br>注解Annotation全解析（一）：我不是注释<br><a href="">注解Annotation全解析（二）：自定义注解的定义</a><br><a href="">注解Annotation全解析（三）：自定义注解的配置使用</a><br><a href="">注解Annotation全解析（四）：自定义注解的运行时解析</a><br><a href="">注解Annotation全解析（五）：注解与XML的比较</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/10/注解Annotation全解析（二）/" rel="prev" title="注解Annotation全解析（二）：自定义注解的定义">
+                注解Annotation全解析（二）：自定义注解的定义 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.psd"
+               alt="把酒临江" />
+          <p class="site-author-name" itemprop="name">把酒临江</p>
+           
+              <p class="site-description motion-element" itemprop="description">在诗和远方中苟且</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Annotation的概念"><span class="nav-number">1.</span> <span class="nav-text">Annotation的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Annotation不是注释"><span class="nav-number">2.</span> <span class="nav-text">Annotation不是注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK自带的常用Annotation"><span class="nav-number">3.</span> <span class="nav-text">JDK自带的常用Annotation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Override"><span class="nav-number">3.1.</span> <span class="nav-text">@Override</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deprecated"><span class="nav-number">3.2.</span> <span class="nav-text">@Deprecated</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SuppressWarnings"><span class="nav-number">3.3.</span> <span class="nav-text">@SuppressWarnings</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">把酒临江</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

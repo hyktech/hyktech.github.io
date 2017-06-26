@@ -1,0 +1,733 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="在注解Annotation全解析（二）：自定义注解的定义一文中，我们学会了定义一个自己的注解。1234567891011121314import java.lang.annotation.ElementType;import java.lang.annotation.Target;import java.lang.annotation.Retention;import java.lang.anno">
+<meta property="og:type" content="article">
+<meta property="og:title" content="注解Annotation全解析（三）：自定义注解的配置使用">
+<meta property="og:url" content="http://yoursite.com/2017/06/12/注解Annotation全解析（三）/index.html">
+<meta property="og:site_name" content="劲松风烟古，月照夜归人">
+<meta property="og:description" content="在注解Annotation全解析（二）：自定义注解的定义一文中，我们学会了定义一个自己的注解。1234567891011121314import java.lang.annotation.ElementType;import java.lang.annotation.Target;import java.lang.annotation.Retention;import java.lang.anno">
+<meta property="og:image" content="http://yoursite.com/img/annotation3/1.PNG">
+<meta property="og:image" content="http://yoursite.com/img/annotation3/2.PNG">
+<meta property="og:updated_time" content="2017-06-26T09:42:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="注解Annotation全解析（三）：自定义注解的配置使用">
+<meta name="twitter:description" content="在注解Annotation全解析（二）：自定义注解的定义一文中，我们学会了定义一个自己的注解。1234567891011121314import java.lang.annotation.ElementType;import java.lang.annotation.Target;import java.lang.annotation.Retention;import java.lang.anno">
+<meta name="twitter:image" content="http://yoursite.com/img/annotation3/1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/12/注解Annotation全解析（三）/"/>
+
+
+
+
+
+  <title>注解Annotation全解析（三）：自定义注解的配置使用 | 劲松风烟古，月照夜归人</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">劲松风烟古，月照夜归人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">写给自己，非请勿入</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/12/注解Annotation全解析（三）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="把酒临江">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.psd">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="劲松风烟古，月照夜归人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">注解Annotation全解析（三）：自定义注解的配置使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-12T00:00:00+08:00">
+                2017-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaSE/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaSE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在<a href="">注解Annotation全解析（二）：自定义注解的定义</a>一文中，<br><span id="LovoAnnotation">我们学会了定义一个自己的注解。</span><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Target;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</div><div class="line"></div><div class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Documented</span></div><div class="line"><span class="meta">@Inherited</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> LovoAnnotation&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">age</span><span class="params">()</span> <span class="keyword">default</span> 18</span>;</div><div class="line">    <span class="keyword">int</span>[] scores(); </div><div class="line">&#125;</div></pre></td></tr></table></figure><br>那么，定义好了一个注解该如何使用呢？这就是我们接下来要探讨的。<br><a id="more"></a></p>
+<h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p><strong>首先</strong>，在前面我们说过，在Oracle的官方文档中，注解Annotation的定义是：</p>
+<blockquote>
+<p>Annotation 是一种能够被书写到Java源代码中的元数据（metadata：描述数据的数据）形式。类、方法、变量、参数和包都可以使用它来进行描述。Annotation不会对它描述的代码操作有任何的直接影响。</p>
+</blockquote>
+<p>从这个定义中，我们可以看到注解是用来修饰Java源代码中的各种元素的，相当于起到一个配置作用。<br><strong>其次</strong>，我们从定义注解的语法可以看到，无论是注解内容中定义的注解类型元素，还是各种元注解的作用，都是用来制定这个自定义注解可以配置什么值，可以配置在哪里，可以在什么阶段读取到这个配置。<br><strong>最后</strong>，我们再来看看这幅图：<br><img src="/img/annotation3/1.PNG" alt=""><br>可以看到，定义注解只是做到了第一步，接下来就要配置它，最后能够在运行期读到这个编码期给出的配置数据。<br><strong><em>接下来我们就来学习如何在另一个类当中配置它</em></strong></p>
+<h2 id="配置Annotation"><a href="#配置Annotation" class="headerlink" title="配置Annotation"></a>配置Annotation</h2><p>我们就利用<a href="#LovoAnnotation">这里定义的LovoAnnotation</a>来进行学习吧。</p>
+<h3 id="首先，我们要书写一个将要使用注解修饰的Java类"><a href="#首先，我们要书写一个将要使用注解修饰的Java类" class="headerlink" title="首先，我们要书写一个将要使用注解修饰的Java类"></a>首先，我们要书写一个将要使用注解修饰的Java类</h3><p>由于我们没有具体的使用场景，只能就语法进行讨论，所以简单定义一个Java类如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">study</span><span class="params">(<span class="keyword">int</span> times)</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; times; i++)&#123;</div><div class="line">            System.out.println(<span class="string">"Good Good Study, Day Day Up!"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="接下来，我们就可以在这个类身上使用我们的LovoAnnotation"><a href="#接下来，我们就可以在这个类身上使用我们的LovoAnnotation" class="headerlink" title="接下来，我们就可以在这个类身上使用我们的LovoAnnotation"></a>接下来，我们就可以在这个类身上使用我们的LovoAnnotation</h3><p>我们先分析一下LovoAnnotation的定义：</p>
+<ol>
+<li>注解名叫做LovoAnnotation，因此我们要使用的标记形式应该是：@LovoAnnotation;</li>
+<li>LovoAnnotation的@Target是定义为Element.TYPE的，那么它书写的位置应该在类型定义的上方，即：public class Student之上；</li>
+<li>由于我们在LovoAnnotation中定义的有注解类型元素，而且有些元素是没有默认值的，这要求我们在使用的时候必须标记名后面打上()，并且在()内以“元素名=元素值“的形式挨个填上所有没有默认值的注解类型元素（有默认值的也可以填上重新赋值），中间用“,”号分割；</li>
+</ol>
+<p>所以我们最终书写的正确形式如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@LovoAnnotation</span>(name=<span class="string">"zhang3"</span>,age=<span class="number">24</span>,scores=&#123;<span class="number">85</span>,<span class="number">67</span>,<span class="number">72</span>&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">study</span><span class="params">(<span class="keyword">int</span> times)</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; times; i++)&#123;</div><div class="line">            System.out.println(<span class="string">"Good Good Study, Day Day Up!"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><strong>特殊语法：</strong><br><em>1、如果注解本身没有定义注解类型元素，那么在使用注解的时候可以省略()，直接写为：@注解名，它和标准语法@注解名()等效！</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpecialAnnotation&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//等效于@SpecailAnnotation()</span></div><div class="line"><span class="meta">@SpecailAnnotation</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeBean</span></span>&#123;</div><div class="line">    <span class="comment">//属性</span></div><div class="line">    <span class="comment">//构造</span></div><div class="line">    <span class="comment">//行为</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><br><em>2、如果注解本身在其内部只定义了一个注解类型元素，并且其命名为value，那么在使用注解的时候可以直接写为：@注解名(注解值)，它和标准写法：@注解名(value=注解值)等效！</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpecialAnnotation&#123;</div><div class="line">    <span class="function"><span class="keyword">float</span> <span class="title">value</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//等效于@SpecailAnnotation(value=2.26f)</span></div><div class="line"><span class="meta">@SpecailAnnotation</span>(<span class="number">2.26f</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeBean</span></span>&#123;</div><div class="line">    <span class="comment">//属性</span></div><div class="line">    <span class="comment">//构造</span></div><div class="line">    <span class="comment">//行为</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><br><em>3、如果注解中某个注解类型元素是一个数组类型，在使用时又出现只需要填入一个值的情况，那么在使用注解的时候可以直接写为：@注解名（类型名=类型值），它和标准写法：@注解名(类型名={类型值})等效！</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpecialAnnotation&#123;</div><div class="line">    String[] addresses();</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//等效于@SpecailAnnotation(addresses=&#123;"NYC"&#125;)</span></div><div class="line"><span class="meta">@SpecailAnnotation</span>(addresses=<span class="string">"NYC"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeBean</span></span>&#123;</div><div class="line">    <span class="comment">//属性</span></div><div class="line">    <span class="comment">//构造</span></div><div class="line">    <span class="comment">//行为</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><br><em>4、如果一个注解的@Target是定义为Element.PARAMETER，那么这个注解是配置在方法的形参前面的，其语法形式如下：</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.PARAMETER&#125;)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpecialAnnotation&#123;</div><div class="line">   <span class="function"><span class="keyword">boolean</span> <span class="title">flag</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeBean</span></span>&#123;</div><div class="line">    <span class="comment">//属性</span></div><div class="line">    <span class="comment">//构造</span></div><div class="line">    <span class="comment">//行为</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(@SpecailAnnotation(flag=<span class="keyword">true</span>)</span> <span class="keyword">int</span> num)</span>&#123;</div><div class="line">        <span class="comment">//方法实现部分</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><em>5、如果一个注解的@Target是定义为Element.PACKAGE，那么这个注解是配置在package-info.java中的，而不能直接在某个类的package代码上面配置。</em></p>
+<h3 id="最后，我们生成DOC文档"><a href="#最后，我们生成DOC文档" class="headerlink" title="最后，我们生成DOC文档"></a>最后，我们生成DOC文档</h3><p>由于我们在定义LovoAnnotation注解的时候，使用了元注解@Documented，所以我们可以在生成的Doc文档中找到Student这个类的描述，并在描述中看到它身上配置的注解信息。<br><img src="/img/annotation3/2.PNG" alt="doc文档截图"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在我们的日常的使用中，主要执行的操作就是把定义好的注解配置在我们自己写的Java代码上。所以注解的配置语法几乎是我们最频繁的操作。如果我们掌握了本次讲解的内容，就完全不用针对每一个注解去死记硬背它的配置方式，而是可以方便的通过该注解的定义就能推出它的配置语法，也便于我们使用JavaDoc文档去查询学习新的注解。<br>好吧，在掌握了本次的内容后，我们就可以继续学习如何在运行期得到我们在编写代码时配置的注解内容，请期待本系列的下一节。</p>
+<p><em><em>系列：</em></em><br><a href="">注解Annotation全解析（一）：我不是注释</a><br><a href="">注解Annotation全解析（二）：自定义注解的定义</a><br>注解Annotation全解析（三）：自定义注解的配置使用<br><a href="">注解Annotation全解析（四）：自定义注解的运行时解析</a><br><a href="">注解Annotation全解析（五）：注解与XML的比较</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/10/注解Annotation全解析（二）/" rel="next" title="注解Annotation全解析（二）：自定义注解的定义">
+                <i class="fa fa-chevron-left"></i> 注解Annotation全解析（二）：自定义注解的定义
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/14/注解Annotation全解析（四）/" rel="prev" title="注解Annotation全解析（四）：自定义注解的运行时解析">
+                注解Annotation全解析（四）：自定义注解的运行时解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.psd"
+               alt="把酒临江" />
+          <p class="site-author-name" itemprop="name">把酒临江</p>
+           
+              <p class="site-description motion-element" itemprop="description">在诗和远方中苟且</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#回顾"><span class="nav-number">1.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Annotation"><span class="nav-number">2.</span> <span class="nav-text">配置Annotation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先，我们要书写一个将要使用注解修饰的Java类"><span class="nav-number">2.1.</span> <span class="nav-text">首先，我们要书写一个将要使用注解修饰的Java类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接下来，我们就可以在这个类身上使用我们的LovoAnnotation"><span class="nav-number">2.2.</span> <span class="nav-text">接下来，我们就可以在这个类身上使用我们的LovoAnnotation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后，我们生成DOC文档"><span class="nav-number">2.3.</span> <span class="nav-text">最后，我们生成DOC文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">把酒临江</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

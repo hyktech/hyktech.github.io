@@ -1,0 +1,1166 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="搞编程的人，只要提到面向对象（OO），肯定就会想到面向对象的三大特征。”封装、继承、多态“几乎成了面试中必须要提到的问题，连朗沃的小卖部大妈都知道这三个东东了😊。可是知道是一回事情，但真要让我们把这三个东西说的清清楚楚、明明白白就又是另一回事情了😖。因为这三个概念实在是太抽象了😡，既涉及到编程语法，又上升到设计思想；既好像在代码中随处可见，又似乎隐藏在设计的思维中；让人好不头疼！所以，本博准">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【面向对象特征系列之“封装”】">
+<meta property="og:url" content="http://yoursite.com/2017/08/16/封装/index.html">
+<meta property="og:site_name" content="劲松风烟古，月照夜归人">
+<meta property="og:description" content="搞编程的人，只要提到面向对象（OO），肯定就会想到面向对象的三大特征。”封装、继承、多态“几乎成了面试中必须要提到的问题，连朗沃的小卖部大妈都知道这三个东东了😊。可是知道是一回事情，但真要让我们把这三个东西说的清清楚楚、明明白白就又是另一回事情了😖。因为这三个概念实在是太抽象了😡，既涉及到编程语法，又上升到设计思想；既好像在代码中随处可见，又似乎隐藏在设计的思维中；让人好不头疼！所以，本博准">
+<meta property="og:image" content="http://yoursite.com/img/20170816/1.jpg">
+<meta property="og:updated_time" content="2017-08-17T07:55:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【面向对象特征系列之“封装”】">
+<meta name="twitter:description" content="搞编程的人，只要提到面向对象（OO），肯定就会想到面向对象的三大特征。”封装、继承、多态“几乎成了面试中必须要提到的问题，连朗沃的小卖部大妈都知道这三个东东了😊。可是知道是一回事情，但真要让我们把这三个东西说的清清楚楚、明明白白就又是另一回事情了😖。因为这三个概念实在是太抽象了😡，既涉及到编程语法，又上升到设计思想；既好像在代码中随处可见，又似乎隐藏在设计的思维中；让人好不头疼！所以，本博准">
+<meta name="twitter:image" content="http://yoursite.com/img/20170816/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/16/封装/"/>
+
+
+
+
+
+  <title>【面向对象特征系列之“封装”】 | 劲松风烟古，月照夜归人</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">劲松风烟古，月照夜归人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">写给自己，非请勿入</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/16/封装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="把酒临江">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="劲松风烟古，月照夜归人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【面向对象特征系列之“封装”】</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-16T00:00:00+08:00">
+                2017-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaSE/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaSE</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaSE/Java面向对象思想/" itemprop="url" rel="index">
+                    <span itemprop="name">Java面向对象思想</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+	
+         <span id="busuanzi_container_page_pv">&nbsp;&nbsp;|&nbsp;&nbsp;阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+		
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>搞编程的人，只要提到面向对象（OO），肯定就会想到面向对象的三大特征。<strong>”封装、继承、多态“</strong>几乎成了面试中必须要提到的问题，连朗沃的小卖部大妈都知道这三个东东了😊。<br>可是知道是一回事情，但真要让我们把这三个东西说的清清楚楚、明明白白就又是另一回事情了😖。因为这三个概念实在是太抽象了😡，既涉及到编程语法，又上升到设计思想；既好像在代码中随处可见，又似乎隐藏在设计的思维中；让人好不头疼！所以，本博准备开一个专题，来聊聊这让人又爱又恨的“三大特征”。<br>今天，我们就先来看看第一个特征<strong>“封装”</strong>。<br><a id="more"></a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>“封装、继承、多态”</strong>，我们念成了口头禅，这个顺序还真不是可以随便改的。<strong>“封装”</strong>是整个面向对象的基础，没有封装性的话，后面两个特性也就白搭。对，封装就是这么🐂13！<br>但是，很多人只要一提到封装就想到信息隐藏，一提到信息隐藏脑子里就只有一个private修饰符了，这也实在是太片面化和简单化了。那么，</p>
+<h2 id="什么是封装"><a href="#什么是封装" class="headerlink" title="什么是封装"></a>什么是封装</h2><p>作为普通人，一想到“封装”这个词，脑子里面浮现的是什么？<br><img src="/img/20170816/1.jpg"><br>没错！就是这样！一个封装包裹的过程。<br>在这样的一个过程中，我们能够明确感受到：封装，封装。“封”是形容“装”的，这是两个动作，先装再封。“装”的目的是为了把散的东西统一在一起，是为了方便处理和使用；而“封”的目的才是为了信息隐藏，但信息隐藏也绝对不是说藏的严严实实，也可以是分各种级别的。比如说：上图中的箱子，如果换成一个透明的玻璃箱，可以不？还不是一样的叫“封装”呀。</p>
+<p>接下来，我们就结合一下编程思想和语法，来讲讲面向对象编程中的这两个动作“装”和“封”，帮助大家再次理解一下。</p>
+<h2 id="如何理解“装”"><a href="#如何理解“装”" class="headerlink" title="如何理解“装”"></a>如何理解“装”</h2><h3 id="面向对象中“类”的定义就是“装”"><a href="#面向对象中“类”的定义就是“装”" class="headerlink" title="面向对象中“类”的定义就是“装”"></a>面向对象中“类”的定义就是“装”</h3><p>其实在计算机语言的发展过程，很多内容都是一步一步发展到今天这个程度的。</p>
+<p>早期的计算机，由于主要处理的问题域的限制（当时主要是科研用途🔬），导致当时处理的数据主要都是数字呀，字符呀这些，所以在编程语言中都会有现成的整数类型、实数类型、字符类型。使用这些基本的数据类型，我们就足够在计算机中保存和处理科学计算问题所需要的数据了。</p>
+<p>后来随着发展，计算机开始进入我们的生活了，那么编程人员要写软件满足大家在生活中的需求。那么他们所遇到的问题域也越来越复杂了，比如：大家要玩游戏🎮，里面有一种数据叫：“武器🔪”。可是用什么数据类型来表示武器呢？武器有名字，有等级，有攻击力等等一大堆内容组成。而以前的数据类型（基本数据类型）只能表示”武器”的某一个方面呀，不能表示“武器”这种东西的整体。更何况，类似于这样的情况在各个问题环境中比比皆是，银行系统需要“用户”类型、酒店系统需要“房间”类型、空管系统需要“航班”类型，太多太多了……咋办呢？干脆让编程语言提供一种可以让程序员“自定义”的复杂类型吧。你们（程序员们）可以根据自己的需要来定义这种复杂类型，把各种需要的数据都装入到这种类型中，然后自己起一个名字来表示就行了呗。C语言就提供了大名鼎鼎的“结构体”语法来干这件事情：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">weapon</span>&#123;</span></div><div class="line">    <span class="keyword">char</span> weaponName[<span class="number">20</span>];  <span class="comment">//武器名称</span></div><div class="line">    <span class="keyword">int</span> weaponLevel;      <span class="comment">//武器等级</span></div><div class="line">    <span class="keyword">int</span> weaponATK;        <span class="comment">//攻击力</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>再后来，编程人员发现很多这种复杂类型其实除了装“数据”以外，还提供了很多功能呢。比如刚才说的“武器”，它还有攻击功能，发大招功能，升级功能等等，所以单一的仅仅只能装入数据的类型设计语法已经不能满足我们了（傲娇～～～）。因此，到了面向对象的编程语言，就提供了“类”这个新东东。即让“武器类”这个类型可以装入武器的所有数据，又能装入“武器类”的所有功能，把所有属于“武器”的内容都装入到里面。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Weapon</span></span>&#123;</div><div class="line">    String weaponName;</div><div class="line">    <span class="keyword">int</span> weaponLevel;</div><div class="line">    <span class="keyword">int</span> weaponATK;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">attack</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//攻击的实现</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">specialAttack</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//特效攻击的实现</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">levelUp</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//升级的实现</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样一个武器的变量，既可以保存武器的全部属性数据，又可以操作到它的行为。你说，“类”的定义是不是就是一种“装”？！😤</p>
+<h3 id="语法中出现-…-就是“装”"><a href="#语法中出现-…-就是“装”" class="headerlink" title="语法中出现{…}就是“装”"></a>语法中出现{…}就是“装”</h3><p>如果我们再把眼光放开一点，我们会发现“装”这个动作，在编程当中其实是很多的，绝不仅仅是类的设计定义上。<br>比如：循环语句块。这个语法中不就是把一堆代码作为一个整体（“装“在一起），每次循环就执行一次吗？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++)&#123;</div><div class="line">    <span class="comment">//循环语句块</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>再比如：方法块；不也是把一系列的语句作为一个整体，每次调用方法就把这些语句块执行一次吗？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">method</span><span class="params">(<span class="keyword">int</span> param)</span></span>&#123;</div><div class="line">    <span class="comment">//方法实现的语句块</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>甚至不仅仅是语句块，下面这个语法不也是把一堆int数据”装”到一个数组集合中统一处理吗？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">13</span>,<span class="number">24</span>,<span class="number">56</span>,-<span class="number">12</span>,<span class="number">7</span>&#125;;</div></pre></td></tr></table></figure></p>
+<p>所以，我们说编程语言中<strong>{…}</strong>这个语法的设计目的，就是把它里面的内容当成一个整体，以便于进行统一的操作使用。这不是“装”是什么？！这是在模块化编程中就已经出现的、自然的、普遍的概念，到了面向对象编程阶段仍然还在延用而已。<br><strong>只是说，在面向对象编程以前没有“封”的语法，所有“装”好的内容，都可以被随意访问到而已。</strong></p>
+<h2 id="如何理解“封”"><a href="#如何理解“封”" class="headerlink" title="如何理解“封”"></a>如何理解“封”</h2><h3 id="为什么要“封”"><a href="#为什么要“封”" class="headerlink" title="为什么要“封”"></a>为什么要“封”</h3><p>总有很多刚开始接触编程的同学，对为什么要进行“封”这个动作很不理解。他们在写代码的时候，总觉得<strong>不方便</strong>。比如JavaBean的规范设计，明明就可以直接用“.”操作符操作到的属性，却偏偏要求写成private（私有）的。然后再添一对get／set（访问器／修改器）方法，简直是“脱了裤子放屁—多此一举”😏。难道真是如此吗？</p>
+<p>是的，就是如此😂😂😂！！！<strong>“封”就是为了对外部访问进行有效的控制！</strong>生活中，把已经”装”好的东西“封”起来，不就是为了限制里面的内容不被外面的人随意看到或获取到吗？难道你会因为怕麻烦，就让快递不把你在某宝上买的那些不可见人的东西封箱？因为怕麻烦就把家里的贵重物品到处放，而不是装到柜子抽屉里，甚至锁上？（少年，你要么太年轻；要么你是真.傻X）。</p>
+<p><strong>“封”当然不是为了方便，它是为了数据的安全性、有效性，为了维护设计者的意图，保证程序的正确性。</strong></p>
+<h3 id="“封”体现在哪里"><a href="#“封”体现在哪里" class="headerlink" title="“封”体现在哪里"></a>“封”体现在哪里</h3><p>在本文一开始的时候，我提到很多面试者被问到“封装”就回答“信息隐藏”，针对这种说法我举双手同意🙆！但如果你认为信息隐藏仅仅只是private或者仅仅是访问修饰符，那我坚决举五肢反对🙅！！“封装”是一种思想，在使用上的体现可以是非常灵活，把它仅仅绑定为某一种语法法或是几个关键字，确实太简单化了。</p>
+<h4 id="访问修饰符肯定是“封装”的体现"><a href="#访问修饰符肯定是“封装”的体现" class="headerlink" title="访问修饰符肯定是“封装”的体现"></a>访问修饰符肯定是“封装”的体现</h4><p>这点毋庸置疑！它们就是为了“封装”而生的，这点从“访问修饰符”这个名字也能看出来。“封装”绝不是“封死”，它也是有范围和级别的呀。所以才有各种访问修饰符来针对不同的情况。</p>
+<table>
+<thead>
+<tr>
+<th>访问修饰符</th>
+<th>封装范围</th>
+<th>容易理解的场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>private</td>
+<td>私有</td>
+<td>你的私房钱，只能你用。</td>
+</tr>
+<tr>
+<td>默认</td>
+<td>同包</td>
+<td>你的家门钥匙，只要住在你家的人都可以使用。</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>受保护</td>
+<td>你的遗产，只能分配给你的家里人或子女。</td>
+</tr>
+<tr>
+<td>public</td>
+<td>公共</td>
+<td>除了卫生纸，你能有多大方？</td>
+</tr>
+</tbody>
+</table>
+<h4 id="get-set方法也是“封装”的体现"><a href="#get-set方法也是“封装”的体现" class="headerlink" title="get/set方法也是“封装”的体现"></a>get/set方法也是“封装”的体现</h4><p>1.比如我们针对某个属性只提供get方法，那么这个属性对外部来说就是只读属性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age = <span class="number">18</span>;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.age;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.我们也可以在set方法中添加限制，让外部的调用者不能把垃圾数据放入对象当中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age = <span class="number">18</span>;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.age;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(age &gt;= <span class="number">18</span> &amp;&amp; age &lt;= <span class="number">80</span>)&#123;</div><div class="line">            <span class="keyword">this</span>.age = age;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3.让外部使用者无法知道类内部保存数据的方式和格式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> year;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> month;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> day;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBirthday</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> year + <span class="string">"-"</span> + month + <span class="string">"-"</span> + day;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBirthday</span><span class="params">(String birthday)</span></span>&#123;</div><div class="line">        String[] values = birthday.split(<span class="string">"[-]"</span>);</div><div class="line">        <span class="keyword">this</span>.year = Integer.parseInt(values[<span class="number">0</span>]);</div><div class="line">        <span class="keyword">this</span>.month = Integer.parseInt(values[<span class="number">1</span>]);</div><div class="line">        <span class="keyword">this</span>.day = Integer.parseInt(values[<span class="number">2</span>]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="我们调用的API或使用的框架同样是“封装”"><a href="#我们调用的API或使用的框架同样是“封装”" class="headerlink" title="我们调用的API或使用的框架同样是“封装”"></a>我们调用的API或使用的框架同样是“封装”</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ArrayList&lt;Integer&gt; lst = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">lst.add(<span class="number">15</span>);</div></pre></td></tr></table></figure>
+<p>当我们使用ArrayList装数据的时候，我们完全不需要去考虑它的具体实现细节（数据结构是咋样的，增加元素空间怎么相应变大变小的），也看不到它内部的实现。这是为什么？“先人”给我们写好了呀，把所有的细节都封装在了ArrayList当中，你只管用就OK了。</p>
+<p>框架也是如此呀。Hibernate框架不就是把大家写起来很烦的ORM映射给封装了吗？在用这个框架前，我们要自己去循环数据查询结果集，自己去匹配哪个表对应哪个Bean类，哪个字段对应哪个属性，大家的时间精力都花在上面了。用了Hibernate以后呢？这些细节，你不用考虑了，只要配置一下对应关系，其它的都由Hibernate自己去做了，它把实现的细节给你封装好了。😊😊😊</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>综上，“封装”是面向对象思想中基本的一个特征。在之前的编程思维中，更多的考虑是“装”，是为了能够让计算机有更好的表现数据的方式，以及更好的代码复用效果。现在到了面向对象，有了“封”的思想和语法，就能更好的保障数据的安全性、有效性、准确性，并能够在此基础上进一步维护设计人员的意图，从而达到设计层面在代码级别对实现层面进行管理控制，降低整个开发风险和成本。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/paytome/webchatpay.png" alt="把酒临江 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/paytome/alipay.png" alt="把酒临江 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/20/小子，你应该知道点位运算/" rel="next" title="你应该知道的一些“位运算”">
+                <i class="fa fa-chevron-left"></i> 你应该知道的一些“位运算”
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.jpg"
+               alt="把酒临江" />
+          <p class="site-author-name" itemprop="name">把酒临江</p>
+           
+              <p class="site-description motion-element" itemprop="description">在诗和远方中苟且</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是封装"><span class="nav-number">2.</span> <span class="nav-text">什么是封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何理解“装”"><span class="nav-number">3.</span> <span class="nav-text">如何理解“装”</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#面向对象中“类”的定义就是“装”"><span class="nav-number">3.1.</span> <span class="nav-text">面向对象中“类”的定义就是“装”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法中出现-…-就是“装”"><span class="nav-number">3.2.</span> <span class="nav-text">语法中出现{…}就是“装”</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何理解“封”"><span class="nav-number">4.</span> <span class="nav-text">如何理解“封”</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要“封”"><span class="nav-number">4.1.</span> <span class="nav-text">为什么要“封”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“封”体现在哪里"><span class="nav-number">4.2.</span> <span class="nav-text">“封”体现在哪里</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#访问修饰符肯定是“封装”的体现"><span class="nav-number">4.2.1.</span> <span class="nav-text">访问修饰符肯定是“封装”的体现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get-set方法也是“封装”的体现"><span class="nav-number">4.2.2.</span> <span class="nav-text">get/set方法也是“封装”的体现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#我们调用的API或使用的框架同样是“封装”"><span class="nav-number">4.2.3.</span> <span class="nav-text">我们调用的API或使用的框架同样是“封装”</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">把酒临江</span>
+</div>
+
+
+<div class="powered-by">
+  个人  专属
+</div>
+
+<div class="theme-info">
+  博客 -
+  胡亦可
+</div>
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+本站总访问量 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

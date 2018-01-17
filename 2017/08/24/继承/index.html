@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/08/24/继承/index.html">
 <meta property="og:site_name" content="劲松风烟古，月照夜归人">
 <meta property="og:description" content="在上一篇系列文章中，我们聊过了面向对象的“封装”特征。在有了封装的基础上，今天我们在来谈谈面向对象第二个特征—-“继承”。👨‍🏫“继承”这个知识点在同学们学习的过程中，其实并不算是一个难点。在语法上，Java也把它设计得非常简单，一个extends关键字就可以搞定；在理解上，“继承”这个词在生活中也很常见，不存在什么晦涩难懂的地方。但一旦涉及到具体使用的时候，就会发现很多同学其实对它的认知度还">
-<meta property="og:updated_time" content="2017-08-24T01:21:15.000Z">
+<meta property="og:updated_time" content="2017-10-23T02:01:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【面向对象特征系列之“继承”】">
 <meta name="twitter:description" content="在上一篇系列文章中，我们聊过了面向对象的“封装”特征。在有了封装的基础上，今天我们在来谈谈面向对象第二个特征—-“继承”。👨‍🏫“继承”这个知识点在同学们学习的过程中，其实并不算是一个难点。在语法上，Java也把它设计得非常简单，一个extends关键字就可以搞定；在理解上，“继承”这个词在生活中也很常见，不存在什么晦涩难懂的地方。但一旦涉及到具体使用的时候，就会发现很多同学其实对它的认知度还">
@@ -420,7 +420,7 @@
 <p>上面三种方式都能让B类与A类发生绑定关系，但其实它们代表的是面向对象中类与类之间的三种关系：<strong>继承、组合、使用</strong>，也就是我们常常说的<strong>”is-a“、”has-a“、”use-a“</strong>关系。在场景中，正确的判断两个类到底是什么关系，从而采用正确的设计（选择对应的语法），这才是王道，否则很有可能被现实打个响亮的耳光！</p>
 <font color="blue">举个例子：有两个类，一个Boy（男孩），一个Girl（女孩）。Boy类有一个kiss方法😚，Girl类有一个叫response（回应）的方法。当Boy的kiss方法在执行的最后，要调用Girl的response方法。我们用三种方式都能实现这个效果，但是他们描述的场景却截然不同。</font><br><strong>第一种：继承---“is-a”---是一个</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Girl</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">response</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"讨厌，你好坏......"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> <span class="keyword">extends</span> <span class="title">Girl</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">kiss</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"让我亲一个嘛～～～"</span>);</div><div class="line">        <span class="keyword">this</span>.response();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br>Boy类继承了Girl类，这本身就说不通了吧……😓 又不是儿子和母亲的关系……还要接吻……🤢。算了，不说了🤐️。所以，这个场景千万不能设计成这种继承，否则你就是个BT！！！<br><br><strong>第二种：组合---“has-a”---有一个</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Girl</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">response</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"讨厌，你好坏......"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> <span class="keyword">extends</span> <span class="title">Girl</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> Girl myGirl；</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">kiss</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"让我亲一个嘛～～～"</span>);</div><div class="line">        myGirl.response();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br>Boy类拥有一个Girl类对象作为自己的属性。这就非常合情合理了，难道你的女朋友不是你生命中的一部分吗❤️？而且，由于Boy对象拥有了Girl对象，所以在Boy对象的任何行为中都可以操作到这个女友对象，让她参与到你生活的方方面面。<strong>这个场景就应该使用这样的设计。</strong><br><br><strong>第三种：使用---“use-a”---用一个</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Girl</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">response</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"讨厌，你好坏......"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> <span class="keyword">extends</span> <span class="title">Girl</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">kiss</span><span class="params">(Girl myGirl)</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"让我亲一个嘛～～～"</span>);</div><div class="line">        myGirl.response();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><br><br>Boy类的kiss方法接收了一个外部参数是Girl的对象，由于参数只是一个局部变量，所以kiss方法结束后，这个Girl对象也就和Boy没有关系了。这个场景嘛……我觉得应该是描述了一种违反道德观的现象。两个对象只在亲吻的时候才有关联，亲吻结束后就互不相识了。还好是亲吻，如果是其它行为我觉得有必要打举报电话了。警察👮叔叔，有人卖哔～～～。<br><br><font color="red" size="4">通过以上分析，要向大家传递的一个内容就是：继承不是你想用就用的，请一定要在场景中分析出这些类真正的具备“is-a”关系。</font>
 
-<h2 id="Java的继承机制"><a href="#Java的继承机制" class="headerlink" title="Java的继承机制"></a>Java的继承机制</h2><p>上面👆，我们描述的是面向对象编程思想中“继承”的概念。但是具体到面向对象的编程语言，不同的语言为了实现这个“继承”的效果，都提供的有自己的机制。作为Java语言的学习者，我们当然要掌握Java语言的继承机制啰。这里面包括了：单继承、内存叠加、接口和抽象类等等内容。由于这些东西内容比较多，又自成体系，所以我决定以后单开一篇博客来讲述，然后再把链接放到这里来。</p>
+<h2 id="Java的继承机制"><a href="#Java的继承机制" class="headerlink" title="Java的继承机制"></a>Java的继承机制</h2><p>上面👆，我们描述的是面向对象编程思想中“继承”的概念。但是具体到面向对象的编程语言，不同的语言为了实现这个“继承”的效果，都提供的有自己的机制。作为Java语言的学习者，我们当然要掌握Java语言的继承机制啰。这里面包括了：单继承、内存叠加、接口和抽象类等等内容。由于这些东西内容比较多，又自成体系，所以我决定以后单开博客来讲述，然后再把链接放到这里来。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后，当你以后被问到“你如何理解面向对象的继承”时，请做如下回答：</p>
 <blockquote>
 <p>继承：是面向对象中的一种类与类之间的关系。当多个类具备一脉相承的“is-a”关系的时候，使用继承。这就能够让这些类进行正确的关联绑定，子类自动具备来自于的父类的属性和行为，做到代码的复用和设计的分离。</p>
@@ -492,6 +492,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/09/01/多态/" rel="prev" title="【面向对象特征系列之“多态”】">
+                【面向对象特征系列之“多态”】 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -562,7 +566,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -633,7 +637,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

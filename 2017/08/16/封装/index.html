@@ -99,7 +99,7 @@
 <meta property="og:site_name" content="劲松风烟古，月照夜归人">
 <meta property="og:description" content="搞编程的人，只要提到面向对象（OO），肯定就会想到面向对象的三大特征。”封装、继承、多态“几乎成了面试中必须要提到的问题，连朗沃的小卖部大妈都知道这三个东东了😊。可是知道是一回事情，但真要让我们把这三个东西说的清清楚楚、明明白白就又是另一回事情了😖。因为这三个概念实在是太抽象了😡，既涉及到编程语法，又上升到设计思想；既好像在代码中随处可见，又似乎隐藏在设计的思维中；让人好不头疼！所以，本博准">
 <meta property="og:image" content="http://yoursite.com/img/20170816/1.jpg">
-<meta property="og:updated_time" content="2017-08-17T07:55:11.000Z">
+<meta property="og:updated_time" content="2018-01-12T05:44:49.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【面向对象特征系列之“封装”】">
 <meta name="twitter:description" content="搞编程的人，只要提到面向对象（OO），肯定就会想到面向对象的三大特征。”封装、继承、多态“几乎成了面试中必须要提到的问题，连朗沃的小卖部大妈都知道这三个东东了😊。可是知道是一回事情，但真要让我们把这三个东西说的清清楚楚、明明白白就又是另一回事情了😖。因为这三个概念实在是太抽象了😡，既涉及到编程语法，又上升到设计思想；既好像在代码中随处可见，又似乎隐藏在设计的思维中；让人好不头疼！所以，本博准">
@@ -410,7 +410,7 @@
 <p>再后来，编程人员发现很多这种复杂类型其实除了装“数据”以外，还提供了很多功能呢。比如刚才说的“武器”，它还有攻击功能，发大招功能，升级功能等等，所以单一的仅仅只能装入数据的类型设计语法已经不能满足我们了（傲娇～～～）。因此，到了面向对象的编程语言，就提供了“类”这个新东东。即让“武器类”这个类型可以装入武器的所有数据，又能装入“武器类”的所有功能，把所有属于“武器”的内容都装入到里面。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Weapon</span></span>&#123;</div><div class="line">    String weaponName;</div><div class="line">    <span class="keyword">int</span> weaponLevel;</div><div class="line">    <span class="keyword">int</span> weaponATK;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">attack</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//攻击的实现</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">specialAttack</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//特效攻击的实现</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">levelUp</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//升级的实现</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这样一个武器的变量，既可以保存武器的全部属性数据，又可以操作到它的行为。你说，“类”的定义是不是就是一种“装”？！😤</p>
-<h3 id="语法中出现-…-就是“装”"><a href="#语法中出现-…-就是“装”" class="headerlink" title="语法中出现{…}就是“装”"></a>语法中出现{…}就是“装”</h3><p>如果我们再把眼光放开一点，我们会发现“装”这个动作，在编程当中其实是很多的，绝不仅仅是类的设计定义上。<br>比如：循环语句块。这个语法中不就是把一堆代码作为一个整体（“装“在一起），每次循环就执行一次吗？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++)&#123;</div><div class="line">    <span class="comment">//循环语句块</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="语法中出现-…-就是“装”"><a href="#语法中出现-…-就是“装”" class="headerlink" title="语法中出现{…}就是“装”"></a>语法中出现{…}就是“装”</h3><p>如果我们再把眼光放开一点，我们会发现“装”这个动作，在编程当中其实是很多的，绝不仅仅是类的设计定义上。<br>比如：循环语句块。这个语法中不就是把一堆代码作为一个整体（“装“在一起），每次循环就执行一次吗？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++)&#123;</div><div class="line">    <span class="comment">//循环语句块</span></div><div class="line">」</div></pre></td></tr></table></figure></p>
 <p>再比如：方法块；不也是把一系列的语句作为一个整体，每次调用方法就把这些语句块执行一次吗？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">method</span><span class="params">(<span class="keyword">int</span> param)</span></span>&#123;</div><div class="line">    <span class="comment">//方法实现的语句块</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>甚至不仅仅是语句块，下面这个语法不也是把一堆int数据”装”到一个数组集合中统一处理吗？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">13</span>,<span class="number">24</span>,<span class="number">56</span>,-<span class="number">12</span>,<span class="number">7</span>&#125;;</div></pre></td></tr></table></figure></p>
 <p>所以，我们说编程语言中<strong>{…}</strong>这个语法的设计目的，就是把它里面的内容当成一个整体，以便于进行统一的操作使用。这不是“装”是什么？！这是在模块化编程中就已经出现的、自然的、普遍的概念，到了面向对象编程阶段仍然还在延用而已。<br><strong>只是说，在面向对象编程以前没有“封”的语法，所有“装”好的内容，都可以被随意访问到而已。</strong></p>
@@ -601,7 +601,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -672,7 +672,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -1,0 +1,1158 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="面向对象特征当中最让初学者头疼的就算是“多态”了🤦‍♂️。“封装”、“继承”的概念大家在生活中还多多少少接触过，还能够做一定层度上的类推，但“多态”这个非生活用词就显得比较陌生了。“多态”的用途和表现形式又非常多，总是在程序设计与开发中出现，弄得的大家不知所措。这儿也是多态，那儿也是多态，那么多态到底是个啥呢？😭">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【面向对象特征系列之“多态”】">
+<meta property="og:url" content="http://yoursite.com/2017/09/01/多态/index.html">
+<meta property="og:site_name" content="劲松风烟古，月照夜归人">
+<meta property="og:description" content="面向对象特征当中最让初学者头疼的就算是“多态”了🤦‍♂️。“封装”、“继承”的概念大家在生活中还多多少少接触过，还能够做一定层度上的类推，但“多态”这个非生活用词就显得比较陌生了。“多态”的用途和表现形式又非常多，总是在程序设计与开发中出现，弄得的大家不知所措。这儿也是多态，那儿也是多态，那么多态到底是个啥呢？😭">
+<meta property="og:image" content="http://yoursite.com/img/20170901/puma.jpg">
+<meta property="og:image" content="http://yoursite.com/img/20170901/maleOrFemale.jpg">
+<meta property="og:image" content="http://yoursite.com/img/20170901/objectInMemory.png">
+<meta property="og:updated_time" content="2018-01-17T06:36:04.377Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【面向对象特征系列之“多态”】">
+<meta name="twitter:description" content="面向对象特征当中最让初学者头疼的就算是“多态”了🤦‍♂️。“封装”、“继承”的概念大家在生活中还多多少少接触过，还能够做一定层度上的类推，但“多态”这个非生活用词就显得比较陌生了。“多态”的用途和表现形式又非常多，总是在程序设计与开发中出现，弄得的大家不知所措。这儿也是多态，那儿也是多态，那么多态到底是个啥呢？😭">
+<meta name="twitter:image" content="http://yoursite.com/img/20170901/puma.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/01/多态/"/>
+
+
+
+
+
+  <title>【面向对象特征系列之“多态”】 | 劲松风烟古，月照夜归人</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">劲松风烟古，月照夜归人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">写给自己，非请勿入</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/多态/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="把酒临江">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="劲松风烟古，月照夜归人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【面向对象特征系列之“多态”】</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T00:00:00+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaSE/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaSE</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaSE/Java面向对象思想/" itemprop="url" rel="index">
+                    <span itemprop="name">Java面向对象思想</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+	
+         <span id="busuanzi_container_page_pv">&nbsp;&nbsp;|&nbsp;&nbsp;阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+		
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>面向对象特征当中最让初学者头疼的就算是<strong>“多态”</strong>了🤦‍♂️。“封装”、“继承”的概念大家在生活中还多多少少接触过，还能够做一定层度上的类推，但“多态”这个非生活用词就显得比较陌生了。<br>“<strong>多态</strong>”的用途和表现形式又非常多，总是在程序设计与开发中出现，弄得的大家不知所措。这儿也是多态，那儿也是多态，那么多态到底是个啥呢？😭<br><a id="more"></a></p>
+<h2 id="什么是多态"><a href="#什么是多态" class="headerlink" title="什么是多态"></a>什么是多态</h2><h3 id="多态的概念："><a href="#多态的概念：" class="headerlink" title="多态的概念："></a>多态的概念：</h3><p>多态（Polymorphism）这个概念最早来自于生物学，表示的是同一物种在同一种群中存在两种或多种明显不同的表型。比如：在南美种群中存在两种颜色的美洲虎：浅黄色的和黑色的。<br><img src="/img/20170901/puma.jpg" width="300" height="440"><br>而在面向对象编程思想中，这个概念表达的是具有共性的类型，在执行相同的行为时，会体现出不同的实现方式。我们可以简称为：<strong>相同的行为，不同的实现。</strong> 比如：同样看到对面过来一个美女，男人和女人的想法是不一样的。<br><img src="/img/20170901/maleOrFemale.jpg" width="300" height="440"></p>
+<h3 id="多态在面向对象中的地位"><a href="#多态在面向对象中的地位" class="headerlink" title="多态在面向对象中的地位"></a>多态在面向对象中的地位</h3><p>一说到面向对象特征，大家都能马上想到“封装”、“继承”、“多态”。<br>1、“封装”是面向对象的基础，它让我们能够把现实环境的复杂内容进行归类，让编程无论在理解度上还是在语法上进行更好的表达；<br>2、“继承”表达的是“重复”，是复用性的体现，能够让我们通过找到类型的共性进行更进一步的提取和划分；<br>3、那么，“多态”则是多样性、可扩展性的体现。面对丰富的和可能不断变化的问题域，让我们的程序能够有更大的容纳性去模拟和适应这些变化。它表达的是“变化”，这就是为什么“多态”能够跻身面向对象三大特征的原因！</p>
+<p><font color="red" size="4"><br>注意：由于“多态”的概念是---相同的行为，不同的实现；所以，对我们而言只有方法才有“多态”性的体现，这点别搞错了～～～<br></font></p>
+<h3 id="多态的分类"><a href="#多态的分类" class="headerlink" title="多态的分类"></a>多态的分类</h3><p>多态分为两种形式：静态多态和动态多态。<br>这里的静态与关键字static并没有什么关系。动静之分主要是表现在程序是在运行期还是编译期，通过被绑定的对象类型来决定到底执行的是哪个方法。<br>静态多态是在编译期就确定了对象以及对象行为的绑定关系，所以运行起来以后就固定为编译期确定的效果；<br>而动态多态是在编译期未知绑定关系，运行进行以后才进行绑定，所以具有更大的灵活性；<br>很明显，动态多态具有更大的灵活性和可扩展性，所以它才是我们使用率更高的多态方式，也是这篇博客要讲述的重点。</p>
+<h2 id="静态多态"><a href="#静态多态" class="headerlink" title="静态多态"></a>静态多态</h2><p>诚如上面所言，静态多态是在编译期间就可以确定要执行的是何种类型的对象以及该对象的何种行为，运行期不会有改变的情况。所以 <strong>方法重载</strong> 或 <strong>单独使用方法重写</strong> 都是它的具体表现形式。</p>
+<h3 id="方法的重载"><a href="#方法的重载" class="headerlink" title="方法的重载"></a>方法的重载</h3><blockquote>
+<p>方法重载：<br>在一个类当中，具有多个同名方法，参数列表不同（包括：参数个数、参数类型、参数顺序的不同），从而各有各的实现。 </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>&#123;    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">study</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"自习"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">study</span><span class="params">(String subject)</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"完成当天课程："</span> + subject + <span class="string">"的课后作业。"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Teacher</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> Student stu;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">teach</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"现在布置任务："</span>);</div><div class="line">        <span class="comment">//stu.study();</span></div><div class="line">        stu.study(<span class="string">"数学"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>讲解：<br>1、Student(学生)类当中拥有两个同名方法study(学习)，一个无参、一个带参，这是标准的重载语法。<br>2、两个study方法之所以同名，是因为它们都是学生类的“学习”行为，但各有各的实现，所以这符合“相同的行为，不同的实现”，这是一个“多态”的设计。<br>3、Teacher(老师)类中绑定了一个Student对象stu，在它的teach方法中调用了stu对象的study行为；如果调用代码是不传参的，那么运行效果一定是“自习”的效果；如果传的是字符串参数，那么运行效果一定是“完成课后作业”的效果。在这里体现了：<strong>运行的最终效果，其实在编译Teacher类的时候就被确定了。</strong>要想改变运行效果，那么只有改写teach方法中的调用代码。这就是所谓的“静态多态”。</p>
+<h3 id="方法的重写"><a href="#方法的重写" class="headerlink" title="方法的重写"></a>方法的重写</h3><blockquote>
+<p>方法重写：<br>在继承关系中，不同的子类都拥有继承于父类的某个共有方法，但是各有各的实现。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Gun</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">fire</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Rifle</span> <span class="keyword">extends</span> <span class="title">Gun</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fire</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"砰～～～"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MachineGun</span> <span class="keyword">extends</span> <span class="title">Gun</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fire</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"哒哒哒哒哒"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Soldier</span></span>&#123;</div><div class="line">    <span class="comment">//private Rifle gun;//绑定步枪对象</span></div><div class="line">    <span class="keyword">private</span> MachineGun gun;<span class="comment">//绑定机枪对象</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fight</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"射击！"</span>);</div><div class="line">        <span class="keyword">this</span>.gun.fire();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>讲解：<br>1、Gun(枪)类有一个方法叫做fire(开火)。Rifle(步枪)和MachineGun(机枪)都是Gun的子类，各自重新实现自己fire方法的特殊实现。这是标准的重写语法。<br>2、步枪，机枪都是枪，都拥有开火行为，但各有各的实现，所以这符合“相同的行为，不同的实现”，这是一个“多态”的设计。<br>3、Soldier(士兵)类中绑定了一个MachineGun对象gun，在它的fight方法中调用了该对象的fire方法。这时运行fight方法的效果一定是机枪的“哒哒哒哒”效果；如果要换成步枪的效果，那么只有把绑定的gun对象类型从MachineGun换成Rifle。在这里同样体现了：<strong>运行的最终效果，其实在编译Soldier类的时候就被确定了。</strong>要想改变运行效果，那么只有改写gun对象的类型声明代码。这也是“静态多态”。</p>
+<h2 id="动态多态"><a href="#动态多态" class="headerlink" title="动态多态"></a>动态多态</h2><p>相对于静态多态，动态多态是什么效果呢？闲话少叙，先让我们看看代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Gun</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">fire</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Rifle</span> <span class="keyword">extends</span> <span class="title">Gun</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fire</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"砰～～～"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MachineGun</span> <span class="keyword">extends</span> <span class="title">Gun</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fire</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"哒哒哒哒哒"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Soldier</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> Gun gun;<span class="comment">//绑定枪对象</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fight</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"射击！"</span>);</div><div class="line">        <span class="keyword">this</span>.gun.fire();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>大家很容易就发现，这个动态多态的例子其实就是改动了一下上面静态多态中的第二个例子。差异在哪儿呢？为什么这个就“动态”了，之前那个就“静态”了呢？<br>其实差异就只有这一句代码而已：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Gun gun;</div></pre></td></tr></table></figure>
+<p>在这个动态绑定的例子当中，Soldier（士兵）类中绑定的不再是某一个Gun（枪）的子类对象，而是父类Gun（枪）的对象。也许有同学会瞪大眼睛疑问：“Gun不是抽象类吗？不能产生对象呀？”<br>其实，Gun是不是抽象类根本无所谓。因为在这里，我们压根儿也没有想过要让gun指向一个Gun对象，我们需要的就是它既可以指向Rifle（步枪）对象，也可以指向MachineGun（机枪）对象。无论以后运行起来绑定谁，都不需要修改Soldier（士兵）的代码！就算将来还有可能增加其它的枪（手枪，狙击枪，火药枪），<font color="red"><strong>只要它是枪</strong></font>，我们的Soldier中已有的绑定代码就可以直接使用，不用修改！！</p>
+<h3 id="父类的引用指向子类的对象"><a href="#父类的引用指向子类的对象" class="headerlink" title="父类的引用指向子类的对象"></a>父类的引用指向子类的对象</h3><p>是的，只要它是枪！在这里，我们描述了在继承关系（is a）中出现的场景。在Java中除了<strong>本类的引用指向本类的对象</strong>，还可以让<strong>父类的引用指向子类的对象</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Gun g1 = <span class="keyword">new</span> Rifle();<span class="comment">//正确</span></div><div class="line">Gun g2 = <span class="keyword">new</span> MachineGun);<span class="comment">//正确</span></div></pre></td></tr></table></figure>
+<p>场景上，“枪“当然可以是一把步枪，也可以是一挺机枪。“枪”类型可以指代任何一种枪对象，这与“步枪”类型只能指代步枪对象，“机枪”类型只能指代机枪对象是不同的。当然前提条件是要有继承关系，这个很生活吧😊。<br>内存中，由于Java的对象内存模型采用的是“内存叠加的方式”，即：在子类对象产生的时候，会先调用父类的构造方法产生一个父类对象部分，然后再调用子类自己的构造方法，在该父类对象部分下面叠加上子类特有部分，从而形成一个完整的子类对象！所以，我们可以认为每一个子类对象中都包含了一个完整的父类对象部分。所以，当用父类引用指向这个子类对象的时候，JVM会发现这个对象确实有父类对象所有的内容，在编译上是没有问题的。<br><img src="/img/20170901/objectInMemory.png" width="600" height="400"><br>所以，当我们绑定一个父类引用的时候，它既有可能指向父类的对象，也有可能是指向该父类的某个子类的对象。它是可变的，具体指向谁不是由编码期的声明决定的，而是可以通过在运行时传入不同的对象，从而形成所谓的<strong>“动态绑定”</strong>。</p>
+<h3 id="动态绑定与重写"><a href="#动态绑定与重写" class="headerlink" title="动态绑定与重写"></a>动态绑定与重写</h3><p>当父类引用指向子类对象以后，在使用这个引用调用方法的时候会发生什么呢？其实无非就三种情况</p>
+<ol>
+<li>使用父类引用调用父类定义的方法；</li>
+<li>使用父类引用调用子类定义的方法；</li>
+<li>使用父类引用调用父类定义，但被子类重写了的方法。</li>
+</ol>
+<p>第一种情况：其本质就是本类的引用调用本类的方法，所以也就没有任何编译或运行的问题；在知识点上，你只需要通过上面的图例3认清楚一点，子类对象中包含有来自于父类对象部分，那么理解起来就很简单了！</p>
+<p>第二种情况：你在调用的时候会发现根本调用不到，编译就会马上报错。其道理也很简单：虽然对象是子类对象，其中当然包含有子类自己定义的内容，但是由于我们的引用是父类类型（即我们是站在父类的层面去看待它），当然就看不到这些子类定义的内容了。如果想访问，那么必须进行“向下转型”。参看：<a href="">向上转型，向下转型，还在头疼？</a></p>
+<p>第三种情况：这是我们在本博中所需要的“动态多态”的知识点。由于这个方法是重写方法，首先说明它的定义就是在父类当中，所以利用父类的引用当然可以看到有这个方法，保证能够使用引用调用得到；其次该方法被子类对象重写了，而且不同的子类可以各有各的实现，那么具体的运行效果，就要依赖于这个父类引用运行起来以后，到底是指向哪种子类的对象了（指向谁，就执行谁的重写后效果）。<br>完整代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Gun</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">fire</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Rifle</span> <span class="keyword">extends</span> <span class="title">Gun</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fire</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"砰～～～"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MachineGun</span> <span class="keyword">extends</span> <span class="title">Gun</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fire</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"哒哒哒哒哒"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Soldier</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> Gun gun;<span class="comment">//绑定枪对象</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fight</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"射击！"</span>);</div><div class="line">        <span class="keyword">this</span>.gun.fire();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//省略get/set方法，请自行添加</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestMain</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        Soldier rambo = <span class="keyword">new</span> Soldier();</div><div class="line">        rambo.setGun(<span class="keyword">new</span> Rifle());</div><div class="line">        <span class="comment">//rambo.setGun(new MachineGun());</span></div><div class="line">        rambo.fight();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过测试这个代码，我们可以看到，如果给rambo（兰博）对象传入Rifle（步枪）对象，那么他战斗的时候就是步枪的效果；如果传入MachineGun（机枪）对象，那么rambo（兰博）对象战斗就是机枪的效果。换步枪、换机枪，但是Soldier和Gun的绑定代码不变，就算以后有别的子类枪，Soldier的代码也无需修改，这就是我们需要的<strong>“动态多态”</strong>效果。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>首先，我们来总结一下知识点：<br>这里，我就不再写出答案了，请各位阅读者自行归纳描述。如果有需要，可以再返回到上面仔细阅读。</p>
+<ol>
+<li>多态的概念是什么？</li>
+<li>什么是静态多态？什么是动态多态？</li>
+<li>动态多态是依赖什么技术实现的？</li>
+<li>动态多态的好处是什么？</li>
+</ol>
+<p>其次，以后我们可以扩展到哪些知识点：</p>
+<ol>
+<li>接口的引用也可以指向实现类的对象；</li>
+<li>反射实现动态产生对象；</li>
+<li>Spring完成IOC注入；</li>
+<li>桥梁模式、装饰器模式、策略模式等常见设计模式；</li>
+<li>聚合组合原则、依赖倒转原则等常见设计原则。</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/paytome/webchatpay.png" alt="把酒临江 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/paytome/alipay.png" alt="把酒临江 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/24/继承/" rel="next" title="【面向对象特征系列之“继承”】">
+                <i class="fa fa-chevron-left"></i> 【面向对象特征系列之“继承”】
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.jpg"
+               alt="把酒临江" />
+          <p class="site-author-name" itemprop="name">把酒临江</p>
+           
+              <p class="site-description motion-element" itemprop="description">在诗和远方中苟且</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是多态"><span class="nav-number">1.</span> <span class="nav-text">什么是多态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多态的概念："><span class="nav-number">1.1.</span> <span class="nav-text">多态的概念：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多态在面向对象中的地位"><span class="nav-number">1.2.</span> <span class="nav-text">多态在面向对象中的地位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多态的分类"><span class="nav-number">1.3.</span> <span class="nav-text">多态的分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态多态"><span class="nav-number">2.</span> <span class="nav-text">静态多态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法的重载"><span class="nav-number">2.1.</span> <span class="nav-text">方法的重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法的重写"><span class="nav-number">2.2.</span> <span class="nav-text">方法的重写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态多态"><span class="nav-number">3.</span> <span class="nav-text">动态多态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#父类的引用指向子类的对象"><span class="nav-number">3.1.</span> <span class="nav-text">父类的引用指向子类的对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态绑定与重写"><span class="nav-number">3.2.</span> <span class="nav-text">动态绑定与重写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">把酒临江</span>
+</div>
+
+
+<div class="powered-by">
+  个人  专属
+</div>
+
+<div class="theme-info">
+  博客 -
+  胡亦可
+</div>
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+本站总访问量 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

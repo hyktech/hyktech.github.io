@@ -1,0 +1,1234 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="根据我们的教学经验，很多0⃣️基础的同学在学习过程中往往遇到的第一个难点就是函数（也叫做方法）。他们往往在学习过程要么是根本不知道函数该如何自定义和调用；要么只能掌握语法却搞不清为啥要这么做；要么对于很多细节概念（形参、实参、返回值、方法调用栈）一窍不通，只能跟着感觉走🤷‍♂️。而函数在编程当中具有非常重要的地位，是以后进一步深入学习的重要基石，马虎不得！所以，今天我们就来帮大家梳理一下这编程路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编程路上第一关：函数（方法）">
+<meta property="og:url" content="http://yoursite.com/2017/10/08/编程路上第一关：函数/index.html">
+<meta property="og:site_name" content="劲松风烟古，月照夜归人">
+<meta property="og:description" content="根据我们的教学经验，很多0⃣️基础的同学在学习过程中往往遇到的第一个难点就是函数（也叫做方法）。他们往往在学习过程要么是根本不知道函数该如何自定义和调用；要么只能掌握语法却搞不清为啥要这么做；要么对于很多细节概念（形参、实参、返回值、方法调用栈）一窍不通，只能跟着感觉走🤷‍♂️。而函数在编程当中具有非常重要的地位，是以后进一步深入学习的重要基石，马虎不得！所以，今天我们就来帮大家梳理一下这编程路">
+<meta property="og:image" content="http://yoursite.com/img/20171008/hsg.jpg">
+<meta property="og:image" content="http://yoursite.com/img/20171008/1.png">
+<meta property="og:image" content="http://yoursite.com/img/20171008/2.png">
+<meta property="og:image" content="http://yoursite.com/img/20171008/3.png">
+<meta property="og:image" content="http://yoursite.com/img/20171008/4.png">
+<meta property="og:image" content="http://yoursite.com/img/20171008/5.png">
+<meta property="og:image" content="http://yoursite.com/img/20171008/6.png">
+<meta property="og:image" content="http://yoursite.com/img/20171008/7.png">
+<meta property="og:image" content="http://yoursite.com/img/20171008/8.png">
+<meta property="og:image" content="http://yoursite.com/img/20171008/9.png">
+<meta property="og:updated_time" content="2018-01-30T09:18:24.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编程路上第一关：函数（方法）">
+<meta name="twitter:description" content="根据我们的教学经验，很多0⃣️基础的同学在学习过程中往往遇到的第一个难点就是函数（也叫做方法）。他们往往在学习过程要么是根本不知道函数该如何自定义和调用；要么只能掌握语法却搞不清为啥要这么做；要么对于很多细节概念（形参、实参、返回值、方法调用栈）一窍不通，只能跟着感觉走🤷‍♂️。而函数在编程当中具有非常重要的地位，是以后进一步深入学习的重要基石，马虎不得！所以，今天我们就来帮大家梳理一下这编程路">
+<meta name="twitter:image" content="http://yoursite.com/img/20171008/hsg.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/08/编程路上第一关：函数/"/>
+
+
+
+
+
+  <title>编程路上第一关：函数（方法） | 劲松风烟古，月照夜归人</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">劲松风烟古，月照夜归人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">写给自己，非请勿入</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/08/编程路上第一关：函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="把酒临江">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="劲松风烟古，月照夜归人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">编程路上第一关：函数（方法）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-08T00:00:00+08:00">
+                2017-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+	
+         <span id="busuanzi_container_page_pv">&nbsp;&nbsp;|&nbsp;&nbsp;阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+		
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>根据我们的教学经验，很多0⃣️基础的同学在学习过程中往往遇到的第一个难点就是<strong>函数</strong>（也叫做<strong>方法</strong>）。他们往往在学习过程要么是根本不知道函数该如何自定义和调用；要么只能掌握语法却搞不清为啥要这么做；要么对于很多细节概念（形参、实参、返回值、方法调用栈）一窍不通，只能跟着感觉走🤷‍♂️。而函数在编程当中具有非常重要的地位，是以后进一步深入学习的重要基石，马虎不得！所以，今天我们就来帮大家梳理一下这编程路上第一关：<strong>函数关</strong>！<br><img src="/img/20171008/hsg.jpg" width="500" height="400"><br><a id="more"></a></p>
+<h2 id="函数的出现"><a href="#函数的出现" class="headerlink" title="函数的出现"></a>函数的出现</h2><p>在学习函数之前，我们同学们所有的代码都是书写在“main”函数的函数体当中。这个“main”函数被我们称之为“主函数”，我们知道整个程序是从主函数的第一句代码开始，直到最后一句代码结束。比如：字符串比较相等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">    <span class="comment">//语句1</span></div><div class="line">    <span class="comment">//语句2</span></div><div class="line">    <span class="comment">//语句3</span></div><div class="line">    ...</div><div class="line">    ...</div><div class="line">    <span class="comment">//语句n</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这样一个结构当中，我们书写了每一道程序练习题目的所有功能代码。从“水仙花数”到“小球弹起落下”、从“求学生成绩平均分”到“打各种星星图形”、从“老耗子生小耗子”到“字符串比较是否相等”我们都是这样做的。我们把所有的代码都写在一个整体模块（“main”函数）当中，然后执行JVM去依次运行每一条语句。那么，当我们的程序越来越庞大、完成的功能越来越多、实现代码越来越复杂的时候，我们也还是这么操作吗？🤔</p>
+<h3 id="情况1-反复出现的代码"><a href="#情况1-反复出现的代码" class="headerlink" title="情况1: 反复出现的代码"></a>情况1: 反复出现的代码</h3><p>在一个程序实现过程中，某一部分的代码功能反复出现了多次。比如：<br><img src="/img/20171008/1.png" width="300" height="200"><br>那么，我们完全可以把这段反复出现的代码，提取到一个单独的模块中，给它取一个名称（即：函数名），然后在需要使用到的地方进行调用就行了。<br><img src="/img/20171008/2.png" width="450" height="400"></p>
+<p>很明显，提出函数之后的设计优势非常大。首先，代码量少了很多，减少了无谓的重复劳动；其次，代码也很便于维护，如果重复代码需要被修改，那么只需要在单独的模块中修改一次即可；第三，如果能够“见名知意”的给函数命名，那么对于代码的整体阅读性也是一种提高！👍</p>
+<h3 id="情况2-复杂问题简单化"><a href="#情况2-复杂问题简单化" class="headerlink" title="情况2: 复杂问题简单化"></a>情况2: 复杂问题简单化</h3><p>除了反复出现的代码值得被书写✍️成为函数以外，还有另一种情况也使得函数被大量的设计出现。那就是当我们遇到业务逻辑比较复杂的大型应用的时候❗️<br>在程序设计过程中，为了处理上的方便，通常是将一个较大的任务划分为若干个较小的部分，每一部分都具有一定的处理功能，并可以分别由不同的人员来编写和调试程序。这种方式即便于设计人员能够从宏观层面分析设计项目流程，又能够组织开发人员分工合作共同完成比较复杂的任务。这种模块化开发思想，最早在编程语言中的体现就是“函数”。<br><img src="/img/20171008/3.png" width="450" height="300"><br>在上图中，我们能清楚的看到：<strong>设计人员</strong>不用去考虑每个功能模块的实现细节，他们只需要理清楚有多少功能模块，模块与模块之间有什么样的顺序流程和数据交互即可；每个功能块可以让不同的<strong>开发人员</strong>同时并行开发，然后组合在一起即可。</p>
+<h3 id="函数的意义"><a href="#函数的意义" class="headerlink" title="函数的意义"></a>函数的意义</h3><font color="blue"><br><br>1. 函数的出现是模块化编程思想的必然结果；<br>2. 设计人员不用考虑实现的细节，只需要理清楚在整个程序中有哪些模块、模块与模块的关系，这样更有利于他们对于程序宏观的控制；<br>3. 开发人员可以只考虑自己负责的模块的实现，达到多人同时开发的效果，在效率上大大提升；<br>4. 同一个函数模块被定义好之后，可以反复调用，从而增加代码的复用性；<br>5. 良好的函数命名，可以大大提升代码的整体可读性。<br></font>
+
+<h2 id="函数的语法"><a href="#函数的语法" class="headerlink" title="函数的语法"></a>函数的语法</h2><p>在了解了函数到底是什么，以及为什么要使用函数以后，我们接下来再来讨论一下Java语言中函数的具体语法。<br>从上面的示例中可以看到，函数是分为两个部分的：“函数的定义”和“函数的调用”。<br><img src="/img/20171008/4.png" width="450" height="300"></p>
+<font color="blue"><br><br>1. 仅有函数的定义，没有函数的调用，那么程序运行起来是不会执行到函数当中的代码块；<br>2. 仅有函数的调用，没有函数的定义，那么程序是找不到这个函数从而无法执行只能报错。<br><br></font>
+
+<h3 id="函数的定义"><a href="#函数的定义" class="headerlink" title="函数的定义"></a>函数的定义</h3><p>由于我们只学到了基础阶段，目前我们能够看到的函数定义语法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> 返回类型 函数名(形参列表)&#123;</div><div class="line">    <span class="comment">//功能的实现语句</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>虽然这个定义语法还不是Java函数语法的全部内容，不过已经包含了最最主要的部分，搞清楚它们对我们后面的学习是至关重要的。方法定义的语法由“声明”和“实现”两块组成。<br><img src="/img/20171008/5.png" width="450" height="300"></p>
+<p>⚠️<font color="orange"><em>Java代码的书写习惯是起始“ { ”不换行，这里是为了画图方便</em></font></p>
+<h4 id="声明部分"><a href="#声明部分" class="headerlink" title="声明部分"></a>声明部分</h4><ul>
+<li><strong>public static</strong> ———— 统称“修饰符”，它们是用来修饰这个函数的被调用范围和调用方式；这里关系到面向对象的知识点，我们在现阶段不讨论，大家现在请先无脑写死；</li>
+<li><p><strong>返回类型</strong> ———— 用来定义函数执行结束以后，是否有结果返回给调用者；如果没有请写void，如果有请书写返回的类型；<br>⚠️<font color="orange"><em>一个函数只能书写一种返回类型，在函数定义的时候只能确定其类型，不能确定其值。因为具体的返回值只有在该函数被执行的时候（调用时）才能确定。</em></font></p>
+</li>
+<li><p><strong>函数名</strong> ———— 用来描述函数功能的标识符，也是用来绑定调用方到底调用哪个函数的关键；</p>
+</li>
+<li><p><strong>形参列表</strong> ———— 如果函数的执行过程中，需要调用方传递一些先决数据，那么就需要定义形参列表；关键在于参数的类型、参数的个数和参数的顺序；</p>
+<font color="orange"><br>⚠️<em>1. 如果函数不需要调用方传参，可以定义无参函数，但是“( )”不能缺少；<br>⚠️2. 由于在定义函数时，同样只能确定是否接参数，接几个参数，每个参数是什么类型的，第一个参是什么，第二个参是什么，所以在语法上此时只有参数的形式没有参数的值（其语法特性就像在定义变量一样，以便于运行起来后装入调用方传入的实际的参数值）。所以，这里的参数列表被称之为“形参列表”（参数的形式）。比如：</em></font>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">welcome</span><span class="params">()</span></span></div></pre></td></tr></table></figure>
+<font color="orange"><em>或</em></font>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">login</span><span class="params">(String name, String password)</span></span></div></pre></td></tr></table></figure>
+<font color="orange"><em>或</em></font>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">addAll</span><span class="params">(<span class="keyword">int</span>[] array)</span></span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="实现部分"><a href="#实现部分" class="headerlink" title="实现部分"></a>实现部分</h4><p>每个函数的实现部分代码都是依赖于该函数在设计的时候要完成什么样的功能而决定的。都是把形参作为已知条件（如果方法声明确定了形参变量），通过具体的算法和流程，完成这个函数的全部功能，并最终返回结果值（如果方法声明确定了返回类型的话）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//完成一个打印欢迎的功能</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">welcome</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"欢迎使用ATM程序👏👏👏"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//完成一个判断用户名是否是“admin”和密码是否是“123456”的登陆功能</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">login</span><span class="params">(String name, String password)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="string">"admin"</span>.equals(name) &amp;&amp; <span class="string">"123456"</span>.equals(password))&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//完成一个数组所有元素求和的功能</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">addAll</span><span class="params">(<span class="keyword">int</span>[] array)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++)&#123;</div><div class="line">        cnt += array[i];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> cnt;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>函数实现部分的语法中，要注意的要点如下：</p>
+<ul>
+<li><p><strong>“{ }”</strong> ———— 函数的实现是从这对大括号的开始而开始，结束而结束的；换句话说只要书写了这对大括号，就叫做函数已经被实现了，就算括号内部一句代码都没有；</p>
+</li>
+<li><p><strong>return</strong> ———— 重要的事情说三遍：“return不是用来返回值的！return不是用来返回值的！return不是用来返回值的！”；<font color="red">return是用来结束函数执行的，把执行流程返回到函数调用处。</font>如果函数声明中有返回类型，那么函数的每种结束情况都需要在return后面跟上该类型的返回值；如果函数声明的返回类型是void，那么直接书写renturn即可结束函数；</p>
+</li>
+</ul>
+<h3 id="函数的调用"><a href="#函数的调用" class="headerlink" title="函数的调用"></a>函数的调用</h3><p>当我们定义好一个函数以后，接下来就是调用了。这样，这个函数才能在执行到调用代码的时候被执行到。其基本结构如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">类名.函数名(实参列表);</div></pre></td></tr></table></figure>
+<h4 id="调用语法"><a href="#调用语法" class="headerlink" title="调用语法"></a>调用语法</h4><p>由于我们目前学习的函数的修饰符固定为“public static”，所以我们都可以使用上面这个语法直接对某个函数进行访问。区别只在于：函数的定义位置和调用位置是否是在同一个类当中。如果是的话，前面的”类名.”是可以省略的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</div><div class="line">    <span class="comment">//定义函数method</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"method函数的实现"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        Test.method();<span class="comment">//调用Test类的method函数</span></div><div class="line">        method();<span class="comment">//调用本类的method函数</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h4><p>参数传递是很多同学在初学函数的时候最容易搞错的地方，所以接下来我们详细讨论一下这种情况。<br>首先，我们分清楚形参与实参两个概念；</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>形参</th>
+<th>实参</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>位置</td>
+<td>方法定义处</td>
+<td>方法调用处</td>
+</tr>
+<tr>
+<td>语法</td>
+<td>声明变量的语法</td>
+<td>使用常量或变量名</td>
+</tr>
+<tr>
+<td>含义</td>
+<td>声明一个新的变量，用来接收函数调用处传递过来的数据值。</td>
+<td>调用方真正需要传递到函数中的数据值； 可以是一个常量值，也是可以是调用方某个同类型变量当中的值。</td>
+</tr>
+</tbody>
+</table>
+<p>其次，我们再记住一个重要的理论：<font color="red">Java中参数的传递只有一种形式叫“值传递”。即把实参的值传递给形参。</font></p>
+<p>接下来，我们看个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">welcome</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;<span class="comment">//num是形参</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; i++)&#123;</div><div class="line">            System.out.println(<span class="string">"欢迎，欢迎，热烈欢迎！"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> times = <span class="number">5</span>;</div><div class="line">        welcome(times);<span class="comment">//times是实参</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行步骤：</p>
+<ol>
+<li>程序从main方法开始，执行“int times = 5;”。内存中在main函数的作用域产生一个times变量，放入数据5；</li>
+<li>执行调用语句”welcome(times);”，程序流程转到welcome函数；</li>
+<li>进入welcome函数，先执行形参”int num”。内存中在welcome函数的作用域产生一个num变量；</li>
+<li>把实参times的值，传递给形参num，完成参数传递；</li>
+<li>开始执行welcome内部的代码。<img src="/img/20171008/6.png" width="400" height="400">
+</li>
+</ol>
+<h4 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h4><p>当函数的声明中带有某种返回类型（非void）的时候，这表明这个函数执行结束以后会有一个该类型的返回值传递回调用处。<font color="blue">如果说参数是为了把函数所需要的外部条件从调用处传递到函数内部，那么返回值则是把函数执行后的结果从函数内部传递回调用处。</font></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Scanner;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</div><div class="line">    <span class="comment">//判断是否是奇数</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isOdd</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</div><div class="line">        <span class="keyword">boolean</span> result = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">if</span>(num % <span class="number">2</span> == <span class="number">1</span>)&#123;</div><div class="line">            result = <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"请输入任意一个整数："</span>);</div><div class="line">        Scanner scan = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">        <span class="keyword">int</span> input = scan.nextInt();</div><div class="line">        <span class="keyword">boolean</span> flag = isOdd(input);<span class="comment">//isOdd函数调用处</span></div><div class="line">        System.out.println(flag);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行步骤：</p>
+<ol>
+<li>程序从main方法开始，当执行到“iint input = scan.nextInt();”。内存中在main函数的作用域产生一个input变量，放入用户输入的数据，比如5；</li>
+<li>“boolean flag = isOdd(input);”这条语句会先执行赋值符号的左边，即在main方法的作用域中先产生一个boolean类型的变量叫做flag；然后再调用isOdd函数；</li>
+<li>调用isOdd函数则程序流程进入isOdd函数内部，先执行”int num”产生形参变量，把实参的值传递给形参，完成参数传递；</li>
+<li>执行isOdd内部的代码，直到结束。由于结束语句是“return result;”，所以会在程序流程返回到方法调用处的同时，把isOdd内部变量result的值作为结果也返回给调用处；</li>
+<li>然后通过“=”赋值符号，把这个值赋给flag变量；然后继续演main函数向下执行。<img src="/img/20171008/7.png" width="400" height="400">
+</li>
+</ol>
+<p>⚠️<font color="orange"><em>只要isOdd函数执行结束，流程就会回到调用处，同时返回值也会返到调用处，不管我们有没有用一个变量接收它。相当于，返回值就是这个函数调用表达式的结果。我们可以把这个结果用一个变量（如：flag）存起来，也可以直接用来做打印、做判断，或者其它操作。</em></font></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"请输入任意一个整数："</span>);</div><div class="line">        Scanner scan = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">        <span class="keyword">int</span> input = scan.nextInt();</div><div class="line">        System.out.println(isOdd(input));<span class="comment">//直接打印返回值</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<font color="orange"><em>或</em></font>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"请输入任意一个整数："</span>);</div><div class="line">        Scanner scan = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">        <span class="keyword">int</span> input = scan.nextInt();</div><div class="line">        <span class="keyword">if</span>(isOdd(input))&#123;<span class="comment">//利用boolean类型返回值做判断</span></div><div class="line">            System.out.println(input + <span class="string">"是奇数"</span>);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            System.out.println(input + <span class="string">"是偶数"</span>);</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<font color="blue">当函数设计有返回值的情况下，可以直接把调用函数的表达式当成一个数据值使用！</font>  
+
+<h4 id="函数调用栈"><a href="#函数调用栈" class="headerlink" title="函数调用栈"></a>函数调用栈</h4><p>当一个函数定义好了以后，任何一个函数都可以调用它。所以很有可能会出现函数调用函数，再调用函数的情况。在这种情况下就会呈现出一种“栈”结构，也就是我们说的<strong>先进后出</strong>，即先被调用的函数会后结束。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">     System.out.println(<span class="string">"main方法开始"</span>);</div><div class="line">     methodA();</div><div class="line">     System.out.println(<span class="string">"main方法结束"</span>);       </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">()</span></span>&#123;</div><div class="line">     System.out.println(<span class="string">"A方法开始"</span>);</div><div class="line">     methodB();</div><div class="line">     System.out.println(<span class="string">"A方法结束"</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">methodB</span><span class="params">()</span></span>&#123;</div><div class="line">     System.out.println(<span class="string">"B方法开始"</span>);</div><div class="line">     System.out.println(<span class="string">"B方法结束"</span>);</div><div class="line">  &#125;      </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行步骤：<br><img src="/img/20171008/8.png" width="600" height="500"></p>
+<p>打印结果：<br><img src="/img/20171008/9.png" width="400" height="400"></p>
+<font color="blue">这种函数嵌套调用的执行顺序，就被称之为“函数调用栈”。</font>
+
+<h2 id="函数的设计"><a href="#函数的设计" class="headerlink" title="函数的设计"></a>函数的设计</h2><p>设计是一个非常灵活和抽象的活儿，没有对错之分，只有好与不好之别。<br>之所以说没有对错，是因为无论如何设计函数最基本的要求都必须是满足功能性；但满足功能要求的设计可能有很多种。<br>而设计的好与不好是体现在复用度的宽与窄、分离度的高与低、以后随着业务的变化是否具有更好的成长性这些方面（说白了就是随着业务变化，是否只需要很少的改动甚至是不需要改动已有的设计）。<br>可是要把握住这些，需要同学们不仅仅掌握语法，还必须有大量的实践与参考优秀设计的经验，这都不是一朝一夕就能够做到的。只有依靠实践和时间去积累，才会有效果。<br>所以，在这里只是罗列出一些简单的，同学们目前能够体会到的设计函数的原则：</p>
+<font color="blue">1、一个函数只做一件事</font>
+
+<p>完美的程序设计，每个函数应该而且只需做一件事。<br>比如说:把大象放进冰箱分三步:把门打开、把大象放进去、把门关上。<br>这样就应该写三个函数而不是一个函数拿所有的事全做了。这样结构清晰，层次分明，也好理解！</p>
+<font color="blue">2、函数的实现规模要小</font>
+
+<p>一个函数的实现语句最好不要超过100行。虽然这不是一个绝对的要求，但却不失为一个好的关注点，因为这提醒我们这个函数的功能是否还可以进行进一步的拆分，从而具有更好的分离度。</p>
+<font color="blue">3、函数名要见名知意</font>
+
+<p>这样才能方便调用者能够正确和快速的选择要使用的函数，同时也让代码具有更高的可读性。</p>
+<font color="blue">4、参数不要过多，参数名也要见名知意</font>
+
+<p>参数过多会导致在使用时容易将参数类型或顺序搞错，从而带来不必要的复杂度。</p>
+<font color="blue">5、好的设计中，参数的有效性一定要验证</font>
+
+<p>参数是从外部传入到函数内部的，其数据值是多少不由函数负责而是调用者的职责。如果调用者传入了不规范甚至错误的数据，可能会导致函数执行的失败。所以，对参数有效性进行验证是一种好的习惯。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/paytome/webchatpay.png" alt="把酒临江 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/paytome/alipay.png" alt="把酒临江 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/28/接口还是抽象类？这是一个问题/" rel="next" title="接口还是抽象类？这是一个问题">
+                <i class="fa fa-chevron-left"></i> 接口还是抽象类？这是一个问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.jpg"
+               alt="把酒临江" />
+          <p class="site-author-name" itemprop="name">把酒临江</p>
+           
+              <p class="site-description motion-element" itemprop="description">在诗和远方中苟且</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的出现"><span class="nav-number">1.</span> <span class="nav-text">函数的出现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#情况1-反复出现的代码"><span class="nav-number">1.1.</span> <span class="nav-text">情况1: 反复出现的代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#情况2-复杂问题简单化"><span class="nav-number">1.2.</span> <span class="nav-text">情况2: 复杂问题简单化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数的意义"><span class="nav-number">1.3.</span> <span class="nav-text">函数的意义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的语法"><span class="nav-number">2.</span> <span class="nav-text">函数的语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数的定义"><span class="nav-number">2.1.</span> <span class="nav-text">函数的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明部分"><span class="nav-number">2.1.1.</span> <span class="nav-text">声明部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现部分"><span class="nav-number">2.1.2.</span> <span class="nav-text">实现部分</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数的调用"><span class="nav-number">2.2.</span> <span class="nav-text">函数的调用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调用语法"><span class="nav-number">2.2.1.</span> <span class="nav-text">调用语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数传递"><span class="nav-number">2.2.2.</span> <span class="nav-text">参数传递</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#返回值"><span class="nav-number">2.2.3.</span> <span class="nav-text">返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数调用栈"><span class="nav-number">2.2.4.</span> <span class="nav-text">函数调用栈</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的设计"><span class="nav-number">3.</span> <span class="nav-text">函数的设计</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">把酒临江</span>
+</div>
+
+
+<div class="powered-by">
+  个人  专属
+</div>
+
+<div class="theme-info">
+  博客 -
+  胡亦可
+</div>
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+本站总访问量 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
